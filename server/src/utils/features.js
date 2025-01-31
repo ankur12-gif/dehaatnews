@@ -1,8 +1,16 @@
-class ErrorHandler extends Error {
-    constructor(message, statusCode) {
-        super(message)
-        this.statusCode = statusCode
-    }
-}
+import mongoose from "mongoose";
 
-export { ErrorHandler };
+const connectToMongoDB = (mongoUri) => {
+    mongoose
+        .connect(mongoUri, { dbName: "NewsDB" })
+        .then((data) => {
+            console.log(`Connected to db ${data.connection.host}`);
+        })
+        .catch((err) => {
+            throw err;
+        });
+};
+
+
+
+export { connectToMongoDB }

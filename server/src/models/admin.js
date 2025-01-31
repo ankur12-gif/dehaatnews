@@ -1,8 +1,8 @@
-import mongoose, { Schema, model } from mongoose;
+import mongoose, { Schema, model } from "mongoose";
 
 const schema = new Schema({
     name: { type: String, required: true },
-    email: { type: email, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
     role: { type: String, enum: ["admin", "user"] },
 }, { timestamps: true })
 
