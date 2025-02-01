@@ -1,0 +1,16 @@
+import express from "express";
+import { adminOnly } from "../middleware/auth.js"
+import { createPost, deleteImage, deletePost, getAllPosts, getSinglePost, updatePost } from "../controllers/post.js";
+import { multiUpload } from "../middleware/multer.js";
+
+
+const app = express.Router();
+
+app.post("/createpost", adminOnly, multiUpload, createPost)
+app.get("/getAllPosts", adminOnly, getAllPosts)
+app.delete("/deleteImage", deleteImage)
+
+app.route("/:postId", adminOnly).get(getSinglePost).delete(deletePost).put(multiUpload, updatePost)
+
+
+export default app

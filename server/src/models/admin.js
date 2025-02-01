@@ -1,8 +1,8 @@
 import mongoose, { Schema, model } from "mongoose";
 
 const schema = new Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    name: { type: String, required: [true, "Please enter name"] },
+    email: { type: String, required: [true, "Please enter email"], unique: true },
     role: { type: String, enum: ["admin", "user"] },
 }, { timestamps: true })
 

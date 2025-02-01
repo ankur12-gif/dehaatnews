@@ -1,30 +1,45 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { connectToMongoDB } from "./src/utils/features.js";
-import userRoute from "./src/routes/admin.js"
+import { connectToMongoDB, hashPassword } from "./src/utils/features.js";
+import userRoute from "./src/routes/admin.js";
+import postsRoute from "./src/routes/post.js"
+import { v2 as cloudinary } from "cloudinary";
+import morgan from "morgan";
 
-
-
-dotenv.config({ path: "./.env" })
+dotenv.config({ path: "./.env" });
 
 const app = express();
-
 app.use(cors("*"));
+app.use(morgan("dev"))
 app.use(express.json());
 
-
-
-const PORT = process.env.PORT
-export const AdminPassKey = process.env.ADMIN_PASS_KEY;
+const PORT = process.env.PORT;
+export let AdminPassKey;
 export const envMode = process.env.NODE_ENV;
+export const jwtSecret = process.env.JWT_SECRET;
 const mongoUri = process.env.MONGO_URI;
 
-connectToMongoDB(mongoUri)
+const initializeServer = async () => {
+    try {
+        cloudinary.config({
+            cloud_name: process.env.CLOUD_NAME,
+            api_key: process.env.CLOUD_API_KEY,
+            api_secret: process.env.CLOUD_API_SECRET,
+        });
+        AdminPassKey = await hashPassword(process.env.ADMIN_PASS_KEY);
 
-app.use("/api/v1/user", userRoute)
+        await connectToMongoDB(mongoUri);
 
+        app.use("/api/v1/user", userRoute);
+        app.use("/api/v1/posts", postsRoute)
 
-app.listen(PORT, () => {
-    console.log(`App is listening on port ${PORT}`)
-})
+        app.listen(PORT, () => {
+            console.log(`App is listening on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Error initializing server:", error);
+    }
+};
+
+initializeServer();
