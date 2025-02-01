@@ -44,7 +44,6 @@ const uploadToCloudinary = async (files) => {
 const deleteFromCloudinary = async (publicIds) => {
 
     const ids = Array.isArray(publicIds) ? publicIds : [publicIds];
-
     const promises = ids.map((publicId) => {
         return new Promise((resolve, reject) => {
             cloudinary.uploader.destroy(publicId, (error, result) => {

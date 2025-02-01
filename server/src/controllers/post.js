@@ -92,7 +92,8 @@ const deletePost = TryCatch(async (req, res, next) => {
     const post = await Posts.findById(postId);
 
     if (!post) return next(new Error("Post does not exist", 400));
-
+    const ids = post.photos.map((i) => i.public_id)
+    await deleteFromCloudinary(ids)
     await Posts.deleteOne({ _id: postId });
 
     return res
