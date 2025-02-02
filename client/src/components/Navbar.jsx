@@ -3,7 +3,14 @@ import { useState } from "react";
 import { RxAvatar as Avatar } from "react-icons/rx";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa"; // Icons for menu
 
-const languages = ["English", "Hindi", "Spanish", "French", "German", "Chinese"];
+const languages = [
+    "English",
+    "Hindi",
+    "Spanish",
+    "French",
+    "German",
+    "Chinese",
+];
 
 const Navbar = ({ user }) => {
     const [menuOpen, setMenuOpen] = useState(false); // Controls main menu
@@ -19,7 +26,7 @@ const Navbar = ({ user }) => {
     };
 
     return (
-        <nav className="bg-black text-white px-5 h-16 flex items-center justify-between">
+        <nav className="bg-black text-white px-5 h-16 flex items-center justify-between fixed top-0 left-0 w-full z-50">
             {/* Logo */}
             <div className="text-2xl font-extrabold mr-5">DehatiNews</div>
 
@@ -37,18 +44,17 @@ const Navbar = ({ user }) => {
 
             {/* Navigation Links */}
             <ul
-                className={`absolute md:static top-16 left-0 w-full md:w-auto md:flex md:space-x-7 font-bold bg-black md:bg-transparent transition-all duration-300 md:items-center z-50 ${menuOpen ? "block" : "hidden"
-                    }`}
+                className={`md:flex md:space-x-7 font-bold bg-black md:bg-transparent transition-all duration-300 md:items-center absolute md:static top-16 left-0 w-full md:w-auto ${menuOpen ? "block" : "hidden"}`}
             >
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0">Home</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0">Business</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0">Politics</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0">Entertainment</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0">Science</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0">Health</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0">Sports</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0">Local</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0">Crypto</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Home</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Business</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Politics</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Entertainment</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Science</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Health</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Sports</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Local</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Crypto</li>
 
                 {/* Language Dropdown */}
                 <li className="relative px-5 py-3 md:px-0 md:py-0">
@@ -67,8 +73,7 @@ const Navbar = ({ user }) => {
                                 <li
                                     key={lang}
                                     onClick={() => handleLanguageSelect(lang)}
-                                    className={`cursor-pointer px-3 py-2 hover:bg-gray-200 ${selectedLanguage === lang ? "bg-gray-300 font-bold" : ""
-                                        }`}
+                                    className={`cursor-pointer px-3 py-2 hover:bg-gray-200 ${selectedLanguage === lang ? "bg-gray-300 font-bold" : ""}`}
                                 >
                                     {lang}
                                 </li>
@@ -80,7 +85,7 @@ const Navbar = ({ user }) => {
 
             {/* Avatar (Visible on large screens) */}
             {user && (
-                <div className="hidden md:block pr-5 cursor-pointer ml-5">
+                <div className="hidden md:block pr-5 cursor-pointer">
                     <Avatar size={40} />
                 </div>
             )}
