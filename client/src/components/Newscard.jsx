@@ -10,10 +10,16 @@ const Newscard = ({
     imageUrl,
 }) => {
     return (
-        <div className="p-4 border-b border-gray-300">
+        <div className="p-4 border-b border-gray-300 relative">
+            {" "}
+            {/* Added `relative` for positioning context */}
+            {/* Source ID in Top-Right Corner */}
+            <div className=" absolute top-2 right-4 bg-red-800 text-white px-2 py-1 rounded-lg text-sm">
+                {sourceId}
+            </div>
             {/* Title */}
-            <div className="font-extrabold text-xl mb-3">{title}</div>
-
+            <div className="font-extrabold text-xl mb-3 mt-8">{title}</div>{" "}
+            {/* Added `mt-8` to account for the sourceId */}
             {/* Image */}
             <div className="w-full overflow-hidden rounded-lg">
                 <img
@@ -22,7 +28,6 @@ const Newscard = ({
                     className="w-full h-auto object-cover"
                 />
             </div>
-
             {/* Description and Metadata */}
             <div className="mt-4">
                 <span className="font-bold text-lg">{description}</span>
@@ -31,11 +36,10 @@ const Newscard = ({
                     by {creator} on {new Date(pubDate).toUTCString()}
                 </span>
             </div>
-
             {/* Read More Button */}
-            <div className="mt-7 flex justify-center">
+            <div className="mt-7 flex justify-end">
                 <a
-                    className="bg-blue-950 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-blue-700 transition-all duration-300 text-sm sm:text-base"
+                    className="bg-blue-700 text-white px-2 py-2 rounded-full cursor-pointer hover:bg-blue-950 hover:font-bold transition-all duration-300 text-sm sm:text-base"
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"

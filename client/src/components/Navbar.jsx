@@ -13,6 +13,7 @@ const languages = [
 ];
 
 const Navbar = ({ user }) => {
+
     const [menuOpen, setMenuOpen] = useState(false); // Controls main menu
     const [isOpen, setIsOpen] = useState(false); // Controls language dropdown
     const [selectedLanguage, setSelectedLanguage] = useState("English");
@@ -84,11 +85,11 @@ const Navbar = ({ user }) => {
             </ul>
 
             {/* Avatar (Visible on large screens) */}
-            {user && (
+            {user ? (
                 <div className="hidden md:block pr-5 cursor-pointer">
                     <Avatar size={40} />
                 </div>
-            )}
+            ) : (<div>{""}</div>)}
         </nav>
     );
 };
