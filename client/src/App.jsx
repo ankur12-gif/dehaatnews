@@ -1,9 +1,10 @@
 import { lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-const Home = lazy(() => import("./pages/Home"))
+const Home = lazy(() => import("./pages/Home.jsx"))
 const Signin = lazy(() => import("./pages/Signin.jsx"))
 const Navbar = lazy(() => import("./components/Navbar.jsx"))
+const Admin = lazy(() => import("./pages/Admin.jsx"))
 
 
 
@@ -16,7 +17,7 @@ function App() {
         <Routes>
           <Route path={"/"} element={<Home />} ></Route>
           <Route path={"/signin"} element={<Signin />}></Route>
-
+          <Route path={"/admin"} element={<Admin />}></Route>
         </Routes>
       </Router>
     </>

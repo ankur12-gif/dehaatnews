@@ -21,7 +21,7 @@ const loginUser = TryCatch(async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, AdminPassKey);
     if (!isMatch || !admin) return next(new Error("You are not allowed", 404));
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, admin });
 });
 
 export { createUser, loginUser };

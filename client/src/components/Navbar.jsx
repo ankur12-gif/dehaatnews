@@ -3,6 +3,7 @@ import { useState } from "react";
 import { RxAvatar as Avatar } from "react-icons/rx";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa"; // Icons for menu
 
+
 const languages = [
     "English",
     "Hindi",
@@ -13,6 +14,7 @@ const languages = [
 ];
 
 const Navbar = ({ user }) => {
+
 
     const [menuOpen, setMenuOpen] = useState(false); // Controls main menu
     const [isOpen, setIsOpen] = useState(false); // Controls language dropdown
@@ -29,7 +31,7 @@ const Navbar = ({ user }) => {
     return (
         <nav className="bg-black text-white px-5 h-16 flex items-center justify-between fixed top-0 left-0 w-full z-50">
             {/* Logo */}
-            <div className="text-2xl font-extrabold mr-5">DehatiNews</div>
+            <div className="text-2xl font-extrabold mr-5">dehatiNews</div>
 
             {/* Hamburger Menu (for small screens) */}
             <div className="flex items-center gap-4">
