@@ -1,7 +1,11 @@
 /* eslint-disable no-unused-vars */
+import { useEffect } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { Pencil, Trash2 } from "lucide-react";
 import { IoIosAddCircle as Addition } from "react-icons/io";
+import { useGetAllPostsQuery } from "../redux/api/postApi";
+import Loader from "../components/Loader.jsx"
+import { useState } from "react";
 
 
 const generateDummyData = (count = 50) => {
@@ -21,7 +25,6 @@ const generateDummyData = (count = 50) => {
 
 const dummyData = generateDummyData(50);
 
-console.log(dummyData);
 
 const columns = [
     { Header: "ID", accessor: "_id" },
@@ -45,6 +48,16 @@ const columns = [
 ];
 
 const Admin = () => {
+
+    const { data, isLoading, isError } = useGetAllPostsQuery()
+    const [rows, setRows] = useState([]);
+
+    useEffect(() => {
+        if (data) {
+            setRows(data.posts)
+        }
+    }, [data])
+
     const {
         getTableProps,
         getTableBodyProps,
@@ -57,9 +70,9 @@ const Admin = () => {
         canNextPage,
         state: { pageIndex },
         pageCount,
-    } = useTable({ columns, data: dummyData }, useSortBy, usePagination);
+    } = useTable({ columns, data: rows }, useSortBy, usePagination);
 
-    return (
+    return (isLoading ? <Loader /> :
         <div className="flex flex-col items-center h-screen bg-gray-600 p-4 ">
 
             <div className="w-full max-w-6xl overflow-x-auto mt-24 rounded-b-xl">

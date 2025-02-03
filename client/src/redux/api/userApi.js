@@ -9,12 +9,12 @@ export const userApi = createApi({
 
     endpoints: (builder) => ({
         userSignin: builder.mutation({
-            query: (user) => ({
+            query: (data) => ({
                 url: `/loginUser`,
                 method: "POST",
-                body: user
+                body: data
             }),
-            invalidatesTags: ["user"],
+            providesTags: ["user"],
         }),
     }),
 });

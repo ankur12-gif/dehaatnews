@@ -1,11 +1,47 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSigninMutation } from "../redux/api/userApi";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { userExist } from "../redux/reducer/userReducer";
+
 
 const Signin = () => {
-    const [password, setPassword] = useState(true);
-
+    const [passwordView, setPasswordView] = useState(true);
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
     const handleViewPasswordClick = () => {
-        setPassword((prev) => !prev);
+        setPasswordView((prev) => !prev);
     };
+
+    const [userSignin] = useUserSigninMutation();
+
+    const [formData, setFormData] = useState({ email: "", password: "" });
+
+
+    const handleChange = async (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({ ...prev, [name]: value }))
+    }
+
+    const handleSubmitClick = async (e) => {
+        e.preventDefault();
+
+        const { data, isError } = await userSignin(formData)
+
+        if (isError) {
+            toast.error("Login Failed")
+        }
+
+        dispatch(userExist(data.admin))
+        if (data.success) {
+
+            navigate("/admin")
+            toast.success(`Welcome ${data.admin.name}`)
+        }
+    }
 
     return (
         <div className="bg-gray-600 h-screen flex justify-center items-center p-4">
@@ -13,11 +49,14 @@ const Signin = () => {
                 <h1 className="flex justify-center font-bold text-xl sm:text-2xl m-3">
                     Login To Continue!
                 </h1>
-                <form className="space-y-4 font-[sans-serif] text-[#333] max-w-md mx-auto">
+                <form className="space-y-4 font-[sans-serif] text-[#333] max-w-md mx-auto" onSubmit={handleSubmitClick}>
                     <div className="relative flex items-center">
                         <input
                             type="email"
                             placeholder="Enter Email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
                             className="px-4 py-3 bg-[#f0f1f2] focus:bg-transparent w-full text-sm border outline-[#007bff] rounded transition-all"
                         />
                         <svg
@@ -53,8 +92,11 @@ const Signin = () => {
 
                     <div className="relative flex items-center">
                         <input
-                            type={password ? "password" : "text"}
+                            type={passwordView ? "password" : "text"}
                             placeholder="Enter Password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
                             className="px-4 py-3 bg-[#f0f1f2] focus:bg-transparent w-full text-sm border outline-[#007bff] rounded transition-all"
                         />
                         <svg
@@ -73,7 +115,7 @@ const Signin = () => {
                     </div>
 
                     <button
-                        type="button"
+                        type="submit"
                         className="px-6 py-2.5 w-full !mt-8 text-sm bg-black hover:bg-blue-600 text-white rounded active:bg-[#006bff]"
                     >
                         Submit

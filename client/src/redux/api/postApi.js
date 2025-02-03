@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+console.log(import.meta.env.VITE_SERVER)
+
 export const postApi = createApi({
     reducerPath: "postApi",
     baseQuery: fetchBaseQuery({
@@ -18,13 +20,13 @@ export const postApi = createApi({
         }),
 
         getAllPosts: builder.query({
-            query: (id) => `getAllPosts?id=${id}`,
-            providesTags: ["orders"],
+            query: () => `getAllPosts`,
+            providesTags: ["posts"]
         }),
 
         getSinglePost: builder.query({
             query: ({ userId, postId }) => `${userId}?id=${postId}`,
-            providesTags: ["orders"],
+            providesTags: ["posts"],
         }),
 
         deleteImage: builder.mutation({
@@ -56,7 +58,7 @@ export const postApi = createApi({
 
 export const {
     useNewPostMutation,
-    getAllPosts,
+    useGetAllPostsQuery,
     useGetSinglePostQuery,
     useDeleteImageMutation,
     useDeletePostMutation,

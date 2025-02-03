@@ -21,6 +21,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5",
     "react-table": "^7.8.0",
+    "redux-persist": "^6.0.0",
     "tailwindcss": "^4.0.1"
   },
   "devDependencies": {

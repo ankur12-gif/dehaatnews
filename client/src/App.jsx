@@ -1,5 +1,7 @@
 import { lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
 
 const Home = lazy(() => import("./pages/Home.jsx"))
 const Signin = lazy(() => import("./pages/Signin.jsx"))
@@ -10,6 +12,8 @@ const Admin = lazy(() => import("./pages/Admin.jsx"))
 
 function App() {
   const user = true
+
+
   return (
     <>
       <Router>
@@ -19,6 +23,7 @@ function App() {
           <Route path={"/signin"} element={<Signin />}></Route>
           <Route path={"/admin"} element={<Admin />}></Route>
         </Routes>
+        <Toaster position="bottom-center" />
       </Router>
     </>
   );
