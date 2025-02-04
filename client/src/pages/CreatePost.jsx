@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
     const { user } = useSelector((state) => state.user);
-    console.log(user)
+
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const navigate = useNavigate();

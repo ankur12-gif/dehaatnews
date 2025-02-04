@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { RxAvatar as Avatar } from "react-icons/rx";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa"; // Icons for menu
+import { Link } from "react-router-dom";
 
 
 const languages = [
@@ -56,7 +57,7 @@ const Navbar = ({ user }) => {
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Science</li>
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Health</li>
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Sports</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Local</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700"><Link to="/local">Local</Link></li>
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Crypto</li>
 
                 {/* Language Dropdown */}

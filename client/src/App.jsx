@@ -8,6 +8,8 @@ const Signin = lazy(() => import("./pages/Signin.jsx"))
 const Navbar = lazy(() => import("./components/Navbar.jsx"))
 const Admin = lazy(() => import("./pages/Admin.jsx"))
 const Createpost = lazy(() => import("./pages/CreatePost.jsx"))
+const Local = lazy(() => import("./pages/Local.jsx"))
+const Viewfull = lazy(() => import("./pages/Viewfull.jsx"))
 
 
 
@@ -24,6 +26,8 @@ function App() {
           <Route path={"/signin"} element={<Signin />}></Route>
           <Route path={"/admin"} element={<Admin />}></Route>
           <Route path={"/createPost"} element={<Createpost />} />
+          <Route path={"/local"} element={<Local />} />
+          <Route path={"/viewfull/:id"} element={<Viewfull />} />
         </Routes>
         <Toaster position="bottom-center" />
       </Router>
