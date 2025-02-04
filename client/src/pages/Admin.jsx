@@ -6,24 +6,10 @@ import { IoIosAddCircle as Addition } from "react-icons/io";
 import { useGetAllPostsQuery } from "../redux/api/postApi";
 import Loader from "../components/Loader.jsx"
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 
-const generateDummyData = (count = 50) => {
-    return Array.from({ length: count }, (_, index) => {
-        const id = index + 1;
-        return {
-            id,
-            _id: `64${id.toString().padStart(7, "0")}abcdef12345678`,
-            title: `Item ${id}`,
-            createdAt: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1)
-                .toUTCString(),
-            updatedAt: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1)
-                .toUTCString(),
-        };
-    });
-};
-
-const dummyData = generateDummyData(50);
 
 
 const columns = [
@@ -52,6 +38,12 @@ const Admin = () => {
     const { data, isLoading, isError } = useGetAllPostsQuery()
     const [rows, setRows] = useState([]);
 
+    const navigate = useNavigate();
+
+    if (isError) {
+        toast.error("Some error occured")
+    }
+
     useEffect(() => {
         if (data) {
             setRows(data.posts)
@@ -71,6 +63,11 @@ const Admin = () => {
         state: { pageIndex },
         pageCount,
     } = useTable({ columns, data: rows }, useSortBy, usePagination);
+
+    const handleCreatePost = () => {
+        navigate("/createPost")
+    }
+
 
     return (isLoading ? <Loader /> :
         <div className="flex flex-col items-center h-screen bg-gray-600 p-4 ">
@@ -141,7 +138,7 @@ const Admin = () => {
                 >
                     Next
                 </button>
-                <div className="cursor-pointer hover:bg-gray-500"><Addition size={40} /></div>
+                <div className="cursor-pointer hover:bg-gray-500" onClick={handleCreatePost}><Addition size={40} /></div>
             </div>
 
         </div>
