@@ -27,7 +27,7 @@ const getAllPosts = TryCatch(async (req, res, next) => {
     return res.status(200).json({ success: true, posts });
 });
 
-const getSinglePost = TryCatch(async (req, res) => {
+const getSinglePost = TryCatch(async (req, res, next) => {
     const { postId } = req.params;
     const post = await Posts.findById(postId);
 

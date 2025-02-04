@@ -25,7 +25,7 @@ export const postApi = createApi({
         }),
 
         getSinglePost: builder.query({
-            query: ({ userId, postId }) => `${userId}?id=${postId}`,
+            query: ({ userId, postId }) => `${postId}?id=${userId}`,
             providesTags: ["posts"],
         }),
 

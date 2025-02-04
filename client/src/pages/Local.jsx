@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 const Local = () => {
 
     const { data, isLoading } = useGetAllPostsQuery();
+    console.log(data)
 
     return (isLoading ? <Loader /> : (data.posts && data.posts.length > 0 ?
         <div className="bg-gray-600 min-h-screen pb-16 mt-16">
