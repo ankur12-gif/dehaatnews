@@ -1,54 +1,78 @@
 /* eslint-disable no-unused-vars */
-import { useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { useEffect, useMemo, useState } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { Pencil, Trash2 } from "lucide-react";
 import { IoIosAddCircle as Addition } from "react-icons/io";
-import { useGetAllPostsQuery } from "../redux/api/postApi";
-import Loader from "../components/Loader.jsx"
-import { useState } from "react";
+import { useGetAllPostsQuery, useDeletePostMutation } from "../redux/api/postApi";
+import Loader from "../components/Loader.jsx";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-
-
-
-const columns = [
-    { Header: "ID", accessor: "_id" },
-    { Header: "Title", accessor: "title" },
-    { Header: "Created At", accessor: "createdAt" },
-    { Header: "Updated At", accessor: "updatedAt" },
-    {
-        Header: "Action",
-        accessor: "actions",
-        Cell: () => (
-            <div className="flex gap-2 justify-center">
-                <button className="text-blue-500 hover:text-blue-700 cursor-pointer">
-                    <Pencil size={20} />
-                </button>
-                <button className="text-red-500 hover:text-red-700 cursor-pointer">
-                    <Trash2 size={20} />
-                </button>
-            </div>
-        ),
-    },
-];
-
 const Admin = () => {
-
-    const { data, isLoading, isError } = useGetAllPostsQuery()
+    const { data, isLoading, isError } = useGetAllPostsQuery();
+    const [deletePost] = useDeletePostMutation();
     const [rows, setRows] = useState([]);
-
     const navigate = useNavigate();
 
-    if (isError) {
-        toast.error("Some error occured")
-    }
+    const handleUpdate = (id) => {
+        navigate(`/update/${id}`);
+    };
+
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+        if (!confirmDelete) return;
+
+        try {
+            const res = await deletePost(id);
+            if (res.data?.success) {
+                toast.success("Post deleted successfully");
+                setRows((prevRows) => prevRows.filter((row) => row._id !== id));
+            } else {
+                toast.error("Failed to delete post");
+            }
+        } catch (error) {
+            toast.error("An error occurred while deleting the post");
+        }
+    };
+
+    const columns = useMemo(
+        () => [
+            { Header: "ID", accessor: "_id" },
+            { Header: "Title", accessor: "title" },
+            { Header: "Created At", accessor: "createdAt" },
+            { Header: "Updated At", accessor: "updatedAt" },
+            {
+                Header: "Action",
+                accessor: "actions",
+                Cell: ({ row }) => (
+                    <div className="flex gap-2 justify-center">
+                        <button
+                            className="text-blue-500 hover:text-blue-700 cursor-pointer"
+                            onClick={() => handleUpdate(row.original._id)}
+                        >
+                            <Pencil size={20} />
+                        </button>
+                        <button
+                            className="text-red-500 hover:text-red-700 cursor-pointer"
+                            onClick={() => handleDelete(row.original._id)}
+                        >
+                            <Trash2 size={20} />
+                        </button>
+                    </div>
+                ),
+            },
+        ],
+        []
+    );
 
     useEffect(() => {
-        if (data) {
-            setRows(data.posts)
+        if (data && JSON.stringify(data.posts) !== JSON.stringify(rows)) {
+            setRows(data.posts);
         }
-    }, [data])
+    }, [data]);
+
+    const memoizedData = useMemo(() => rows, [rows]);
 
     const {
         getTableProps,
@@ -62,22 +86,22 @@ const Admin = () => {
         canNextPage,
         state: { pageIndex },
         pageCount,
-    } = useTable({ columns, data: rows }, useSortBy, usePagination);
+    } = useTable({ columns, data: memoizedData }, useSortBy, usePagination);
 
     const handleCreatePost = () => {
-        navigate("/createPost")
+        navigate("/createPost");
+    };
+
+    if (isError) {
+        toast.error("Some error occurred");
     }
 
-
-    return (isLoading ? <Loader /> :
-        <div className="flex flex-col items-center h-screen bg-gray-600 p-4 ">
-
+    return isLoading ? (
+        <Loader />
+    ) : (
+        <div className="flex flex-col items-center h-screen bg-gray-600 p-4">
             <div className="w-full max-w-6xl overflow-x-auto mt-24 rounded-b-xl">
-                <table
-                    {...getTableProps()}
-                    className="table-auto w-full border border-gray-300 shadow-md rounded-lg bg-white"
-                >
-                    {/* Table Header */}
+                <table {...getTableProps()} className="table-auto w-full border border-gray-300 shadow-md rounded-lg bg-white">
                     <thead className="bg-black text-white">
                         {headerGroups.map((hg) => (
                             <tr key={hg.id} {...hg.getHeaderGroupProps()}>
@@ -88,16 +112,12 @@ const Admin = () => {
                                         className="px-4 py-2 border border-gray-300 text-sm md:text-base text-center"
                                     >
                                         {column.render("Header")}
-                                        {column.isSorted && (
-                                            <span>{column.isSortedDesc ? " ↓" : " ↑"}</span>
-                                        )}
+                                        {column.isSorted && <span>{column.isSortedDesc ? " ↓" : " ↑"}</span>}
                                     </th>
                                 ))}
                             </tr>
                         ))}
                     </thead>
-
-                    {/* Table Body */}
                     <tbody {...getTableBodyProps()}>
                         {page.map((row) => {
                             prepareRow(row);
@@ -118,8 +138,6 @@ const Admin = () => {
                     </tbody>
                 </table>
             </div>
-
-            {/* Pagination Controls */}
             <div className="flex items-center gap-4 mt-4">
                 <button
                     className="font-bold text-white bg-blue-600 hover:bg-blue-800 px-4 py-2 rounded-lg disabled:opacity-50"
@@ -138,9 +156,10 @@ const Admin = () => {
                 >
                     Next
                 </button>
-                <div className="cursor-pointer hover:bg-gray-500" onClick={handleCreatePost}><Addition size={40} /></div>
+                <div className="cursor-pointer hover:bg-gray-500" onClick={handleCreatePost}>
+                    <Addition size={40} />
+                </div>
             </div>
-
         </div>
     );
 };

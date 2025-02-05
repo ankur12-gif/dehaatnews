@@ -1,8 +1,8 @@
 
-const update = () => {
+const Update = () => {
     return (
         <div>update</div>
     )
 }
 
-export default update
+export default Update
