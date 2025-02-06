@@ -47,7 +47,7 @@ export const postApi = createApi({
 
         updatePost: builder.mutation({
             query: ({ postData, userId, postId }) => ({
-                url: `${userId}?postId=${postId}`,
+                url: `${postId}?id=${userId}`,
                 method: "PUT",
                 body: postData,
             }),

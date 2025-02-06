@@ -18,8 +18,6 @@ const Viewfull = () => {
     // Show a loader while data is being fetched
     if (isLoading) return <Loader />;
 
-    // Log the photos for debugging
-    console.log(data?.post?.photos);
 
     return (
         <div className="bg-gray-600 pt-20 min-h-screen flex justify-center p-4">
@@ -38,7 +36,7 @@ const Viewfull = () => {
                         className="w-full h-48 sm:h-64"
                     >
                         {data.post.photos.map((photo, index) => (
-                            <SwiperSlide key={index} className="flex justify-center items-center">
+                            <SwiperSlide key={index} className="flex justify-center items-center p-2">
                                 <img
                                     src={photo.url} // Access the `url` property of each photo object
                                     alt={`Post Image ${index + 1}`}
