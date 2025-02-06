@@ -8,13 +8,14 @@ import { useGetAllPostsQuery, useDeletePostMutation } from "../redux/api/postApi
 import Loader from "../components/Loader.jsx";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Admin = () => {
     const { data, isLoading, isError } = useGetAllPostsQuery();
     const [deletePost] = useDeletePostMutation();
     const [rows, setRows] = useState([]);
     const navigate = useNavigate();
-
+    const { user } = useSelector((state) => state.user);
     const handleUpdate = (id) => {
         navigate(`/update/${id}`);
     };
@@ -24,7 +25,7 @@ const Admin = () => {
         if (!confirmDelete) return;
 
         try {
-            const res = await deletePost(id);
+            const res = await deletePost({ postId: id, userId: user._id });
             if (res.data?.success) {
                 toast.success("Post deleted successfully");
                 setRows((prevRows) => prevRows.filter((row) => row._id !== id));
