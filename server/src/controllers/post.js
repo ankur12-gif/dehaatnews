@@ -58,6 +58,7 @@ const deleteImage = TryCatch(async (req, res, next) => {
 const updatePost = TryCatch(async (req, res, next) => {
     const { postId } = req.params;
 
+    const { title, description } = req.body;
     console.log(postId + " " + title + " " + description)
     const photos = req.files;
 

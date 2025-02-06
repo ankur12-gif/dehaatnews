@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { useNavigate, useParams } from "react-router-dom";
 import {
+    useDeleteImageMutation,
     useGetSinglePostQuery,
     useUpdatePostMutation,
 } from "../redux/api/postApi";
@@ -13,6 +13,8 @@ import toast from "react-hot-toast";
 const Update = () => {
     const { user } = useSelector((state) => state.user);
     const params = useParams();
+
+    const [deletePost] = useDeleteImageMutation();
 
     const { data, isLoading: Loading } = useGetSinglePostQuery({
         userId: user._id,
@@ -66,7 +68,7 @@ const Update = () => {
                 );
             } else {
                 toast.success("Post updated successfully!");
-                navigate(`/admin`); // Redirect to the updated post's details page
+                navigate(`/admin`);
             }
         } catch (error) {
             toast.error(
@@ -84,6 +86,24 @@ const Update = () => {
         photos.changeHandler(e);
     };
 
+    const handleDeleteImage = async (imageId) => {
+        const postId = params.id;
+
+        try {
+            const { data } = await deletePost({ postId, imageId })
+            if (data.success) {
+                toast.success(data.message)
+            } else {
+                toast.error("Failed to delete")
+            }
+
+        } catch (error) {
+            toast.error(`An error occurred while creating the post ${error}`);
+        }
+
+
+    };
+
     return Loading ? (
         <div className="flex justify-center items-center min-h-screen">
             <p>Loading...</p>
@@ -93,12 +113,19 @@ const Update = () => {
             <div className="bg-white min-h-screen w-1/2 rounded-2xl">
                 <div className="flex justify-center items-center flex-wrap gap-4">
                     {data?.post?.photos.map((i) => (
-                        <img
-                            className="m-2 w-32 h-32 object-cover rounded-lg"
-                            key={i._id}
-                            src={i.url}
-                            alt="Not available"
-                        />
+                        <div key={i._id} className="relative group">
+                            <img
+                                className="m-2 w-32 h-32 object-cover rounded-lg"
+                                src={i.url}
+                                alt="Not available"
+                            />
+                            <button
+                                onClick={() => handleDeleteImage(i.public_id)}
+                                className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                                &times;
+                            </button>
+                        </div>
                     ))}
                 </div>
 
