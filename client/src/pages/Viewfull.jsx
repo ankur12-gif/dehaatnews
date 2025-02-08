@@ -18,6 +18,14 @@ const Viewfull = () => {
     // Show a loader while data is being fetched
     if (isLoading) return <Loader />;
 
+    // Function to split description into paragraphs
+    const formatDescription = (description) => {
+        if (!description) return []; // Handle empty description
+        return description.split("\n"); // Split by line breaks
+    };
+
+    // Get formatted paragraphs
+    const paragraphs = formatDescription(data?.post?.description);
 
     return (
         <div className="bg-gray-600 pt-20 min-h-screen flex justify-center p-4">
@@ -38,7 +46,7 @@ const Viewfull = () => {
                         {data.post.photos.map((photo, index) => (
                             <SwiperSlide key={index} className="flex justify-center items-center p-2">
                                 <img
-                                    src={photo.url} // Access the `url` property of each photo object
+                                    src={photo.url} // Access the url property of each photo object
                                     alt={`Post Image ${index + 1}`}
                                     className="w-full h-full object-cover rounded-lg"
                                 />
@@ -50,8 +58,10 @@ const Viewfull = () => {
                 )}
 
                 {/* Post Description */}
-                <div className="flex justify-center p-4 m-4 text-sm sm:text-base">
-                    {data.post.description}
+                <div className="flex flex-col justify-center p-4 m-4 text-sm sm:text-base">
+                    {paragraphs.map((paragraph, index) => (
+                        <p key={index} className="mb-4">{paragraph}</p> // Add margin-bottom to separate paragraphs
+                    ))}
                 </div>
             </div>
         </div>

@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { RxAvatar as Avatar } from "react-icons/rx";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa"; // Icons for menu
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userNotExist } from "../redux/reducer/userReducer";
 
 const languages = [
     "English",
@@ -15,18 +16,35 @@ const languages = [
 ];
 
 const Navbar = ({ user }) => {
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [menuOpen, setMenuOpen] = useState(false); // Controls main menu
     const [isOpen, setIsOpen] = useState(false); // Controls language dropdown
     const [selectedLanguage, setSelectedLanguage] = useState("English");
+    const [avatarDropdownOpen, setAvatarDropdownOpen] = useState(false); // Controls avatar dropdown
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const toggleDropdown = () => setIsOpen(!isOpen);
+    const toggleAvatarDropdown = () => setAvatarDropdownOpen(!avatarDropdownOpen);
 
     const handleLanguageSelect = (lang) => {
         setSelectedLanguage(lang);
         setIsOpen(false); // Close dropdown after selection
+    };
+
+    const handleHomeClick = () => {
+        navigate("/")
+    }
+
+    const handleAvatarClick = () => {
+        navigate("/admin")
+    }
+
+    const handleLogout = () => {
+        dispatch(userNotExist());
+        navigate("/")
+
     };
 
     return (
@@ -37,7 +55,7 @@ const Navbar = ({ user }) => {
             {/* Hamburger Menu (for small screens) */}
             <div className="flex items-center gap-4">
                 {user && (
-                    <div className="md:hidden cursor-pointer">
+                    <div className="cursor-pointer md:hidden" onClick={toggleAvatarDropdown}>
                         <Avatar size={30} />
                     </div>
                 )}
@@ -50,7 +68,7 @@ const Navbar = ({ user }) => {
             <ul
                 className={`md:flex md:space-x-7 font-bold bg-black md:bg-transparent transition-all duration-300 md:items-center absolute md:static top-16 left-0 w-full md:w-auto ${menuOpen ? "block" : "hidden"}`}
             >
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Home</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" onClick={handleHomeClick}>Home</li>
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Business</li>
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Politics</li>
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Entertainment</li>
@@ -87,10 +105,34 @@ const Navbar = ({ user }) => {
                 </li>
             </ul>
 
-            {/* Avatar (Visible on large screens) */}
+            {/* Avatar (Visible on all screens) */}
             {user ? (
-                <div className="hidden md:block pr-5 cursor-pointer">
-                    <Avatar size={40} />
+                <div className="pr-5 cursor-pointer relative">
+                    {/* Avatar for larger screens */}
+                    <div className="hidden md:block">
+                        <Avatar size={40} onClick={toggleAvatarDropdown} />
+                    </div>
+                    {/* Avatar for smaller screens */}
+                    <div className="md:hidden">
+                        <Avatar size={30} onClick={toggleAvatarDropdown} />
+                    </div>
+                    {/* Dropdown for both mobile and desktop */}
+                    {avatarDropdownOpen && (
+                        <ul className="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg z-50">
+                            <li
+                                onClick={handleAvatarClick}
+                                className="cursor-pointer px-3 py-2 hover:bg-gray-200"
+                            >
+                                Profile
+                            </li>
+                            <li
+                                onClick={handleLogout}
+                                className="cursor-pointer px-3 py-2 hover:bg-gray-200"
+                            >
+                                Logout
+                            </li>
+                        </ul>
+                    )}
                 </div>
             ) : (<div>{""}</div>)}
         </nav>
