@@ -1,6 +1,7 @@
 import { useGetAllPostsQuery } from "../redux/api/postApi"
 import Newscard from "../components/Newscard";
 import Loader from "../components/Loader";
+import { motion } from "motion/react"
 
 
 const Local = () => {
@@ -9,10 +10,12 @@ const Local = () => {
     console.log(data)
 
     return (isLoading ? <Loader /> : (data.posts && data.posts.length > 0 ?
-        <div className="bg-gray-600 min-h-screen pb-16 mt-16">
+        <motion.div layoutId="underline" className="bg-gray-600 min-h-screen pb-16 mt-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {data.posts.map((i) => (
-                    <div
+                    <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
                         key={i._id}
                         className="bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                     >
@@ -30,10 +33,10 @@ const Local = () => {
                             creator={i.creator ? i.creator : "Anonymous"}
                             imageUrl={i.photos[0].url}
                         />
-                    </div>
+                    </motion.button>
                 ))}
             </div>
-        </div> : <div>No Posts Available</div>)
+        </motion.div> : <div>No Posts Available</div>)
     )
 }
 
