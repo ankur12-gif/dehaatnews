@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Protectedroute from "./components/Protectedroute.jsx";
+import { useGetAllNewsQuery } from "./redux/api/newsApi.js";
 
 
 const Home = lazy(() => import("./pages/Home.jsx"));
@@ -17,6 +18,12 @@ const Sponsers = lazy(() => import("./pages/Sponsers.jsx"));
 
 const AppContent = () => {
   const location = useLocation();
+
+  const { data, isLoading } = useGetAllNewsQuery();
+
+  if (!isLoading)
+    console.log(data)
+
   return (
     <>
       {location.pathname !== "/" && <Navbar />}
