@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Protectedroute from "./components/Protectedroute.jsx";
 import { useGetAllNewsQuery } from "./redux/api/newsApi.js";
@@ -13,39 +13,26 @@ const Createpost = lazy(() => import("./pages/CreatePost.jsx"));
 const Local = lazy(() => import("./pages/Local.jsx"));
 const Viewfull = lazy(() => import("./pages/Viewfull.jsx"));
 const Update = lazy(() => import("./pages/Update.jsx"));
-const Sponsers = lazy(() => import("./pages/Sponsers.jsx"));
 
 
-const AppContent = () => {
-  const location = useLocation();
+const App = () => {
 
   const { data, isLoading } = useGetAllNewsQuery();
 
   if (!isLoading)
     console.log(data)
 
-  return (
-    <>
-      {location.pathname !== "/" && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Sponsers />} />
-      </Routes>
-    </>
-  );
-};
-
-function App() {
 
 
   return (
     <>
       <Router>
-
-        <AppContent />
+        <Navbar />
         <Routes>
           <Route path={"/home"} element={<Home />}></Route>
           <Route path={"/signin"} element={<Signin />}></Route>
           <Route path={"/local"} element={<Local />} />
+          <Route path={"/"} element={<Local />} />
           <Route path={"/viewfull/:id"} element={<Viewfull />} />
 
           <Route path={""} element={<Protectedroute />}>
