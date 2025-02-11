@@ -2,7 +2,7 @@ import { lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Protectedroute from "./components/Protectedroute.jsx";
-import { useGetAllNewsQuery } from "./redux/api/newsApi.js";
+// import { useGetAllNewsQuery } from "./redux/api/newsApi.js";
 
 
 const Home = lazy(() => import("./pages/Home.jsx"));
@@ -15,12 +15,13 @@ const Viewfull = lazy(() => import("./pages/Viewfull.jsx"));
 const Update = lazy(() => import("./pages/Update.jsx"));
 
 
+
 const App = () => {
 
-  const { data, isLoading } = useGetAllNewsQuery();
+  // const { data, isLoading } = useGetAllNewsQuery();
 
-  if (!isLoading)
-    console.log(data)
+  // if (!isLoading)
+  //   console.log(data)
 
 
 
@@ -28,6 +29,7 @@ const App = () => {
     <>
       <Router>
         <Navbar />
+
         <Routes>
           <Route path={"/home"} element={<Home />}></Route>
           <Route path={"/signin"} element={<Signin />}></Route>

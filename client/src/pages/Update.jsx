@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 const Update = () => {
     const { user } = useSelector((state) => state.user);
     const params = useParams();
-    console.log(user)
+
     const [deletePost] = useDeleteImageMutation();
 
     const { data, isLoading: Loading } = useGetSinglePostQuery({

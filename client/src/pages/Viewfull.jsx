@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+
 import { useParams } from "react-router-dom";
 import { useGetSinglePostQuery } from "../redux/api/postApi";
 import Loader from "../components/Loader";
@@ -10,10 +10,9 @@ import { Navigation, Pagination } from "swiper/modules";
 
 const Viewfull = () => {
     const params = useParams();
-    const { user } = useSelector((state) => state.user);
 
     // Fetch the single post data
-    const { data, isLoading } = useGetSinglePostQuery({ userId: user._id, postId: params.id });
+    const { data, isLoading } = useGetSinglePostQuery({ postId: params.id });
 
     // Show a loader while data is being fetched
     if (isLoading) return <Loader />;

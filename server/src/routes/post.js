@@ -9,8 +9,9 @@ const app = express.Router();
 app.post("/createpost", adminOnly, multiUpload, createPost)
 app.get("/getAllPosts", getAllPosts)
 app.delete("/deleteImage", deleteImage)
+app.get("/:postId", getSinglePost)
 
-app.route("/:postId", adminOnly).get(getSinglePost).delete(deletePost).put(multiUpload, updatePost)
+app.route("/:postId", adminOnly).delete(deletePost).put(multiUpload, updatePost)
 
 
 export default app

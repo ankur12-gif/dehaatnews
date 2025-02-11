@@ -3,7 +3,7 @@ import { useState } from "react";
 import { RxAvatar as Avatar } from "react-icons/rx";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa"; // Icons for menu
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userNotExist } from "../redux/reducer/userReducer";
 
 const languages = [
@@ -15,7 +15,8 @@ const languages = [
     "Chinese",
 ];
 
-const Navbar = ({ user }) => {
+const Navbar = () => {
+    const { user } = useSelector((state) => state.user)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

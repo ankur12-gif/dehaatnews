@@ -2,7 +2,7 @@ import { useGetAllPostsQuery } from "../redux/api/postApi"
 import Newscard from "../components/Newscard";
 import Loader from "../components/Loader";
 import { motion } from "motion/react"
-
+import Sponsers from "../components/Sponsers.jsx"
 
 const Local = () => {
 
@@ -10,7 +10,8 @@ const Local = () => {
     console.log(data)
 
     return (isLoading ? <Loader /> : (data.posts && data.posts.length > 0 ?
-        <motion.div layoutId="underline" className="bg-gray-600 min-h-screen pb-16 mt-16">
+        <motion.div layoutId="underline" className="bg-gray-600 min-h-screen pb-16">
+            <Sponsers />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {data.posts.map((i) => (
                     <motion.button
