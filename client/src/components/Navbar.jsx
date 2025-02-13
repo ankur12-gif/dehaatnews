@@ -50,6 +50,8 @@ const Navbar = () => {
 
 
 
+
+
     return (
         <nav className="bg-black text-white px-5 h-16 flex items-center justify-between fixed top-0 left-0 w-full z-50">
             {/* Logo */}
@@ -77,9 +79,9 @@ const Navbar = () => {
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Entertainment</li>
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Science</li>
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Health</li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Sports</li>
+                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" ><a href="/download">eCopy</a></li>
                 <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700"><Link to="/local">Local</Link></li>
-                <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">Crypto</li>
+
 
                 {/* Language Dropdown */}
                 <li className="relative px-5 py-3 md:px-0 md:py-0">
