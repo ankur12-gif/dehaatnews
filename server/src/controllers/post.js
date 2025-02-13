@@ -24,8 +24,7 @@ const createPost = TryCatch(async (req, res) => {
 });
 
 const getAllPosts = TryCatch(async (req, res, next) => {
-
-    const cachedPosts = myCache.get("allPosts")
+    const cachedPosts = myCache.get("allPosts");
 
     if (cachedPosts) {
         return res.status(200).json({ success: true, posts: cachedPosts });
@@ -38,9 +37,18 @@ const getAllPosts = TryCatch(async (req, res, next) => {
 
 const getSinglePost = TryCatch(async (req, res, next) => {
     const { postId } = req.params;
+
+    const cachedPost = myCache.get(`post_${postId}`);
+
+    if (cachedPost) {
+        return res.status(200).json({ success: true, post: cachedPost });
+    }
+
     const post = await Posts.findById(postId);
 
-    if (!post) next(new Error("Post dees not Exist", 400));
+    if (!post) return next(new Error("Post dees not Exist", 400));
+
+    myCache.set(`post_${postId}`, post, TTL);
 
     return res.status(200).json({ success: true, post });
 });
@@ -58,7 +66,8 @@ const deleteImage = TryCatch(async (req, res, next) => {
     post.photos = post.photos.filter((i) => i.public_id !== imageId);
 
     await post.save();
-
+    myCache.del("posts");
+    myCache.del(`post_${postId}`);
     return res
         .status(200)
         .json({ success: true, message: "Image deleted successfully" });
@@ -68,7 +77,7 @@ const updatePost = TryCatch(async (req, res, next) => {
     const { postId } = req.params;
 
     const { title, description } = req.body;
-    console.log(postId + " " + title + " " + description)
+    console.log(postId + " " + title + " " + description);
     const photos = req.files;
 
     const post = await Posts.findById(postId);
@@ -89,7 +98,8 @@ const updatePost = TryCatch(async (req, res, next) => {
     }
 
     await post.save();
-
+    myCache.del("posts");
+    myCache.del(`post_${postId}`);
     return res
         .status(200)
         .json({ success: true, message: "Post updated successfully" });
@@ -101,10 +111,11 @@ const deletePost = TryCatch(async (req, res, next) => {
     const post = await Posts.findById(postId);
 
     if (!post) return next(new Error("Post does not exist", 400));
-    const ids = post.photos.map((i) => i.public_id)
-    await deleteFromCloudinary(ids)
+    const ids = post.photos.map((i) => i.public_id);
+    await deleteFromCloudinary(ids);
     await Posts.deleteOne({ _id: postId });
-
+    myCache.del("posts");
+    myCache.del(`post_${postId}`);
     return res
         .status(200)
         .json({ success: true, message: "post deleted successfully" });
