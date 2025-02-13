@@ -6,6 +6,7 @@ import userRoute from "./src/routes/admin.js";
 import postsRoute from "./src/routes/post.js"
 import { v2 as cloudinary } from "cloudinary";
 import morgan from "morgan";
+import NodeCache from "node-cache";
 
 dotenv.config({ path: "./.env" });
 
@@ -18,7 +19,10 @@ const PORT = process.env.PORT;
 export let AdminPassKey;
 export const envMode = process.env.NODE_ENV;
 export const jwtSecret = process.env.JWT_SECRET;
+export const TTL = process.env.TIME_TO_LIVE;
 const mongoUri = process.env.MONGO_URI;
+
+export const myCache = new NodeCache();
 
 const initializeServer = async () => {
     try {

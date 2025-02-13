@@ -7,9 +7,7 @@ const Home = () => {
         <motion.div layoutId="underline" className="bg-gray-600 min-h-screen pb-16 mt-16" transition={{ duration: 3 }}>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {data.map((i) => (
-                    <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
+                    <div
                         key={i.article_id}
                         className="bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                     >
@@ -26,7 +24,7 @@ const Home = () => {
                             creator={i.creator ? i.creator : "Anonymous"}
                             imageUrl={i.image_url}
                         />
-                    </motion.button>
+                    </div>
                 ))}
             </div>
         </motion.div>

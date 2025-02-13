@@ -14,9 +14,7 @@ const Local = () => {
             <Sponsers />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {data.posts.map((i) => (
-                    <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
+                    <div
                         key={i._id}
                         className="bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                     >
@@ -31,10 +29,10 @@ const Local = () => {
                             }
                             pubDate={i.createdAt}
                             sourceId={"DehatiNews"}
-                            creator={i.creator ? i.creator : "Anonymous"}
+                            creator={i.creator ? i.creator : "Ankur ke papa"}
                             imageUrl={i.photos[0].url}
                         />
-                    </motion.button>
+                    </div>
                 ))}
             </div>
         </motion.div> : <div>No Posts Available</div>)

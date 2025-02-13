@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import { TryCatch } from "../middleware/error.js";
 import { Posts } from "../models/posts.js";
 import { deleteFromCloudinary, uploadToCloudinary } from "../utils/features.js";
+import { myCache } from "../../app.js";
+import { TTL } from "../../app.js";
 
 const createPost = TryCatch(async (req, res) => {
     const { title, description } = req.body;
@@ -22,7 +24,14 @@ const createPost = TryCatch(async (req, res) => {
 });
 
 const getAllPosts = TryCatch(async (req, res, next) => {
+
+    const cachedPosts = myCache.get("allPosts")
+
+    if (cachedPosts) {
+        return res.status(200).json({ success: true, posts: cachedPosts });
+    }
     const posts = await Posts.find({});
+    myCache.set("allPosts", posts, TTL);
 
     return res.status(200).json({ success: true, posts });
 });

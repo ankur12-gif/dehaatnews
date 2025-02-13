@@ -57,7 +57,7 @@ const Viewfull = () => {
                 )}
 
                 {/* Post Description */}
-                <div className="flex flex-col justify-center p-4 m-4 text-sm sm:text-base">
+                <div className="flex flex-col justify-center p-4 m-4 text-sm font-semibold sm:text-base">
                     {paragraphs.map((paragraph, index) => (
                         <p key={index} className="mb-4">{paragraph}</p> // Add margin-bottom to separate paragraphs
                     ))}

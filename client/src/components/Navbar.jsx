@@ -48,6 +48,8 @@ const Navbar = () => {
 
     };
 
+
+
     return (
         <nav className="bg-black text-white px-5 h-16 flex items-center justify-between fixed top-0 left-0 w-full z-50">
             {/* Logo */}
@@ -113,11 +115,6 @@ const Navbar = () => {
                     <div className="hidden md:block">
                         <Avatar size={40} onClick={toggleAvatarDropdown} />
                     </div>
-                    {/* Avatar for smaller screens */}
-                    <div className="md:hidden">
-                        <Avatar size={30} onClick={toggleAvatarDropdown} />
-                    </div>
-                    {/* Dropdown for both mobile and desktop */}
                     {avatarDropdownOpen && (
                         <ul className="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg z-50">
                             <li
