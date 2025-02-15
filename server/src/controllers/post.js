@@ -20,7 +20,7 @@ const createPost = TryCatch(async (req, res) => {
     const photosUrl = await uploadToCloudinary(photos);
 
     const post = await Posts.create({ title, description, category, photos: photosUrl });
-    myCache.del("posts");
+    myCache.del("allPosts");
     return res
         .status(201)
         .json({ success: true, message: "Post created successfully" });
@@ -33,7 +33,7 @@ const getAllPosts = TryCatch(async (req, res, next) => {
     }
     const posts = await Posts.find({});
     myCache.set("allPosts", posts, TTL);
-
+    console.log(posts)
     return res.status(200).json({ success: true, posts });
 });
 
@@ -68,7 +68,7 @@ const deleteImage = TryCatch(async (req, res, next) => {
     post.photos = post.photos.filter((i) => i.public_id !== imageId);
 
     await post.save();
-    myCache.del("posts");
+    myCache.del("allPosts");
     myCache.del(`post_${postId}`);
     return res
         .status(200)
@@ -100,7 +100,7 @@ const updatePost = TryCatch(async (req, res, next) => {
     }
 
     await post.save();
-    myCache.del("posts");
+    myCache.del("allPosts");
     myCache.del(`post_${postId}`);
     return res
         .status(200)
@@ -109,7 +109,7 @@ const updatePost = TryCatch(async (req, res, next) => {
 
 const deletePost = TryCatch(async (req, res, next) => {
     const { postId } = req.params;
-    myCache.del("posts");
+    myCache.del("allPosts");
     myCache.del(`post_${postId}`);
     const post = await Posts.findById(postId);
 
@@ -117,7 +117,7 @@ const deletePost = TryCatch(async (req, res, next) => {
     const ids = post.photos.map((i) => i.public_id);
     await deleteFromCloudinary(ids);
     await Posts.deleteOne({ _id: postId });
-    myCache.del("posts");
+    myCache.del("allPosts");
     myCache.del(`post_${postId}`);
     return res
         .status(200)

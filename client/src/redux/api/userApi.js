@@ -14,7 +14,6 @@ export const userApi = createApi({
                 method: "POST",
                 body: data
             }),
-            providesTags: ["user"],
         }),
     }),
 });
