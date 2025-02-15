@@ -14,8 +14,9 @@ import { useNavigate } from "react-router-dom";
 const CreatePost = () => {
     const { user } = useSelector((state) => state.user);
 
-    const [title, setTitle] = useState();
-    const [description, setDescription] = useState();
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [category, setCategory] = useState("general"); // State for category
     const navigate = useNavigate();
 
     const [newPost, { isLoading }] = useNewPostMutation();
@@ -38,6 +39,7 @@ const CreatePost = () => {
         const formData = new FormData();
         formData.set("title", title);
         formData.set("description", description);
+        formData.set("category", category); // Add category to FormData
 
         // Append each file to the FormData
         photos.file.forEach((file) => {
@@ -60,9 +62,9 @@ const CreatePost = () => {
     };
 
     return (
-        <div className="bg-gray-600 pt-20 h-screen flex flex-col items-center justify-center">
+        <div className="bg-gray-600 pt-20 min-h-screen flex flex-col items-center justify-center p-4">
             {/* Image Preview Section with Swiper */}
-            <div className="bg-white h-1/2 w-1/2 rounded-lg m-2 flex items-center justify-center p-4">
+            <div className="bg-white h-96 w-full md:w-1/2 rounded-lg mb-4 flex items-center justify-center p-4 overflow-hidden">
                 {photos.error && <p className="text-red-500">{photos.error}</p>}
 
                 {photos.preview?.length > 0 ? (
@@ -77,7 +79,7 @@ const CreatePost = () => {
                                 <img
                                     src={img}
                                     alt={`Preview ${i}`}
-                                    className="w-full h-64 m-2 object-cover rounded-lg"
+                                    className="w-full h-full object-contain rounded-lg"
                                 />
                             </SwiperSlide>
                         ))}
@@ -88,7 +90,7 @@ const CreatePost = () => {
             </div>
 
             {/* Form Section */}
-            <div className="bg-white h-auto w-1/2 text-black font-bold p-4 rounded-lg">
+            <div className="bg-white w-full md:w-1/2 text-black font-bold p-6 rounded-lg">
                 <form className="flex flex-col space-y-6" onSubmit={handleFormSubmit}>
                     <div>
                         <label className="mb-2 text-lg block">Title</label>
@@ -109,6 +111,21 @@ const CreatePost = () => {
                         ></textarea>
                     </div>
                     <div>
+                        <label className="mb-2 text-base block">Category</label>
+                        <select
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            className="px-4 py-2.5 text-lg rounded-md bg-white border border-gray-400 w-full outline-blue-500"
+                        >
+                            <option value="general">General</option>
+                            <option value="crime">Crime</option>
+                            <option value="health">Health</option>
+                            <option value="sports">Sports</option>
+                            <option value="story">Story</option>
+                            <option value="farming">Farming</option>
+                        </select>
+                    </div>
+                    <div>
                         <label className="mb-2 text-base block">Photos</label>
                         <input
                             type="file"
@@ -116,12 +133,13 @@ const CreatePost = () => {
                             multiple
                             required
                             onChange={photos.changeHandler}
+                            className="w-full"
                         />
                     </div>
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="bg-black text-white h-10 rounded-2xl hover:bg-blue-900"
+                        className="bg-black text-white h-12 rounded-2xl hover:bg-blue-900 transition-colors duration-300"
                     >
                         {isLoading ? "Creating..." : "Create"}
                     </button>

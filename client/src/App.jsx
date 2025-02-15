@@ -14,6 +14,7 @@ const Local = lazy(() => import("./pages/Local.jsx"));
 const Viewfull = lazy(() => import("./pages/Viewfull.jsx"));
 const Update = lazy(() => import("./pages/Update.jsx"));
 const Download = lazy(() => import("./pages/Download.jsx"));
+const Contactus = lazy(() => import("./pages/Contactus.jsx"));
 
 
 
@@ -36,6 +37,7 @@ const App = () => {
           <Route path={"/home"} element={<Home />}></Route>
           <Route path={"/signin"} element={<Signin />}></Route>
           <Route path={"/local"} element={<Local />} />
+          <Route path={"/contactus"} element={<Contactus />} />
           <Route path={"/"} element={<Local />} />
           <Route path={"/download"} element={<Download />} />
           <Route path={"/viewfull/:id"} element={<Viewfull />} />

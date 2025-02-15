@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
 
 const Newscard = ({
     title,
@@ -38,14 +39,12 @@ const Newscard = ({
             </div>
             {/* Read More Button */}
             <div className="mt-7 flex justify-end">
-                <a
-                    className="bg-blue-700 text-white px-2 py-2 rounded-full cursor-pointer hover:bg-blue-950 hover:font-bold transition-all duration-300 text-sm sm:text-base"
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <Link
+                    className="bg-blue-700 text-white px-4 py-2 rounded-full cursor-pointer hover:bg-blue-950 hover:font-bold transition-all duration-300 text-sm sm:text-base"
+                    to={link}
                 >
                     READ MORE
-                </a>
+                </Link>
             </div>
         </div>
     );

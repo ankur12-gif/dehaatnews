@@ -9,18 +9,18 @@ import fetch from 'node-fetch';
 import path from 'path';
 
 const createPost = TryCatch(async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, category } = req.body;
 
     const photos = req.files;
 
     if (!photos) return new Error("Please upload photos", 400);
 
-    if (!title || !description) return new Error("Please enter all fields");
+    if (!title || !description || !category) return new Error("Please enter all fields");
 
     const photosUrl = await uploadToCloudinary(photos);
 
-    const post = await Posts.create({ title, description, photos: photosUrl });
-
+    const post = await Posts.create({ title, description, category, photos: photosUrl });
+    myCache.del("posts");
     return res
         .status(201)
         .json({ success: true, message: "Post created successfully" });
@@ -28,7 +28,6 @@ const createPost = TryCatch(async (req, res) => {
 
 const getAllPosts = TryCatch(async (req, res, next) => {
     const cachedPosts = myCache.get("allPosts");
-
     if (cachedPosts) {
         return res.status(200).json({ success: true, posts: cachedPosts });
     }
@@ -110,7 +109,8 @@ const updatePost = TryCatch(async (req, res, next) => {
 
 const deletePost = TryCatch(async (req, res, next) => {
     const { postId } = req.params;
-
+    myCache.del("posts");
+    myCache.del(`post_${postId}`);
     const post = await Posts.findById(postId);
 
     if (!post) return next(new Error("Post does not exist", 400));

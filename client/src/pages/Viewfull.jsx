@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useGetSinglePostQuery } from "../redux/api/postApi";
 import Loader from "../components/Loader";
@@ -40,15 +39,18 @@ const Viewfull = () => {
                         modules={[Navigation, Pagination]}
                         navigation
                         pagination={{ clickable: true }}
-                        className="w-full h-48 sm:h-64"
+                        className="w-full h-96" // Fixed height for Swiper
+                        style={{ aspectRatio: '4/3' }} // Set aspect ratio
                     >
                         {data.post.photos.map((photo, index) => (
-                            <SwiperSlide key={index} className="flex justify-center items-center p-2">
-                                <img
-                                    src={photo.url} // Access the url property of each photo object
-                                    alt={`Post Image ${index + 1}`}
-                                    className="w-full h-full object-cover rounded-lg"
-                                />
+                            <SwiperSlide key={index} className="flex justify-center items-center">
+                                <div className="flex justify-center items-center w-full h-full"> {/* Center the image */}
+                                    <img
+                                        src={photo.url} // Access the url property of each photo object
+                                        alt={`Post Image ${index + 1}`}
+                                        className="max-w-full max-h-full object-contain" // Ensure images are fully visible
+                                    />
+                                </div>
                             </SwiperSlide>
                         ))}
                     </Swiper>
