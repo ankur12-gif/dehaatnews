@@ -7,22 +7,26 @@ import postsRoute from "./src/routes/post.js"
 import { v2 as cloudinary } from "cloudinary";
 import morgan from "morgan";
 import NodeCache from "node-cache";
+import { corsOptions } from "./src/utils/constants.js";
 
 dotenv.config({ path: "./.env" });
 
 const app = express();
-app.use(cors("*"));
-app.use(morgan("dev"))
-app.use(express.json());
+
 
 const PORT = process.env.PORT;
 export let AdminPassKey;
-export const envMode = process.env.NODE_ENV;
+
 export const jwtSecret = process.env.JWT_SECRET;
 export const TTL = process.env.TIME_TO_LIVE;
+export const envMode = process.env.NODE_ENV || "PRODUCTION";
 const mongoUri = process.env.MONGO_URI;
-
 export const myCache = new NodeCache();
+
+
+app.use(cors(corsOptions));
+app.use(morgan("dev"))
+app.use(express.json());
 
 const initializeServer = async () => {
     try {

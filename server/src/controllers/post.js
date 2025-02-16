@@ -33,7 +33,6 @@ const getAllPosts = TryCatch(async (req, res, next) => {
     }
     const posts = await Posts.find({});
     myCache.set("allPosts", posts, TTL);
-    console.log(posts)
     return res.status(200).json({ success: true, posts });
 });
 
