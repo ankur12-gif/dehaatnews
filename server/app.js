@@ -27,7 +27,6 @@ export const myCache = new NodeCache();
 app.use(cors(corsOptions));
 app.use(morgan("dev"))
 app.use(express.json());
-
 const initializeServer = async () => {
     try {
         cloudinary.config({
