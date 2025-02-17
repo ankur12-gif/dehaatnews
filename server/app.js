@@ -7,7 +7,6 @@ import postsRoute from "./src/routes/post.js"
 import { v2 as cloudinary } from "cloudinary";
 import morgan from "morgan";
 import NodeCache from "node-cache";
-import { corsOptions } from "./src/utils/constants.js";
 
 dotenv.config({ path: "./.env" });
 
@@ -23,10 +22,27 @@ export const envMode = process.env.NODE_ENV || "PRODUCTION";
 const mongoUri = process.env.MONGO_URI;
 export const myCache = new NodeCache();
 
+console.log(process.env.CLIENT_URL)
+
+const corsOptions = {
+    origin: [
+        "http://localhost:5173",
+        "http://localhost:4173",
+        process.env.CLIENT_URL,
+    ],
+    credentials: true,
+};
+
+
 
 app.use(cors(corsOptions));
 app.use(morgan("dev"))
 app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.send("Hello World");
+});
+
 const initializeServer = async () => {
     try {
         cloudinary.config({

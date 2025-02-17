@@ -34,20 +34,15 @@ const Navbar = () => {
 
     return (
         <nav className="bg-black text-white h-16 flex items-center justify-between fixed top-0 left-0 w-full z-50">
-            {/* Logo */}
-            <div className="text-2xl font-extrabold p-5">dehaatNews</div>
-
             {/* Hamburger Menu (for small screens) */}
-            <div className="flex items-center gap-4">
-                {user && (
-                    <div className="cursor-pointer md:hidden" onClick={toggleAvatarDropdown}>
-                        <Avatar size={30} />
-                    </div>
-                )}
+            <div className="flex items-center gap-4 p-5">
                 <button className="md:hidden text-2xl" onClick={toggleMenu}>
                     {menuOpen ? <FaTimes /> : <FaBars />}
                 </button>
             </div>
+
+            {/* Logo */}
+            <div className="text-2xl font-extrabold p-5 md:mr-auto">dehaatNews</div>
 
             {/* Navigation Links */}
             <div className="flex-grow flex justify-center"> {/* Center the navigation links */}
@@ -56,9 +51,8 @@ const Navbar = () => {
                 >
                     <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" onClick={handleHomeClick}>Home</li>
                     <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700 relative" onClick={toggleLocalDropdown}>
-                        <span className="flex justify-center items-center gap-1">
-                            Local
-                            {localDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
+                        <span className="flex items-center gap-1">
+                            Local {localDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
                         </span>
                         {localDropdownOpen && (
                             <ul className="absolute left-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg z-50">

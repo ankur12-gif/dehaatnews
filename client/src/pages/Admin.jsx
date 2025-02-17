@@ -12,7 +12,6 @@ import { useSelector } from "react-redux";
 
 const Admin = () => {
     const { data, isLoading, isError } = useGetAllPostsQuery();
-    console.log(data)
     const [deletePost] = useDeletePostMutation();
     const [rows, setRows] = useState([]);
     const navigate = useNavigate();
