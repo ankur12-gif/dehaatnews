@@ -65,7 +65,7 @@ const Navbar = () => {
             </div>
 
             {/* Logo */}
-            <div className="text-2xl font-extrabold p-5 md:mr-auto">dehaatNews</div>
+            <div className="text-2xl font-extrabold p-5 md:mr-auto cursor-pointer" onClick={() => { navigate("/") }}>dehaatNews</div>
 
             {/* Navigation Links */}
             <div className="flex-grow flex justify-center"> {/* Center the navigation links */}

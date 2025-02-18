@@ -25,6 +25,11 @@ const Viewfull = () => {
     // Get formatted paragraphs
     const paragraphs = formatDescription(data?.post?.description);
 
+    // Extract images
+    const photos = data?.post?.photos || [];
+    const firstImage = photos[0]?.url;
+    const secondImage = photos[1]?.url; // Second image if available
+
     return (
         <div className="bg-gray-600 pt-20 min-h-screen flex justify-center p-4">
             <div className="bg-white h-auto w-full sm:w-3/4 md:w-1/2 rounded-lg m-2">
@@ -34,7 +39,7 @@ const Viewfull = () => {
                 </div>
 
                 {/* Image Swiper */}
-                {data?.post?.photos?.length > 0 ? (
+                {firstImage ? (
                     <Swiper
                         modules={[Navigation, Pagination]}
                         navigation
@@ -42,7 +47,7 @@ const Viewfull = () => {
                         className="w-full h-96" // Fixed height for Swiper
                         style={{ aspectRatio: '4/3' }} // Set aspect ratio
                     >
-                        {data.post.photos.map((photo, index) => (
+                        {photos.map((photo, index) => (
                             <SwiperSlide key={index} className="flex justify-center items-center">
                                 <div className="flex justify-center items-center w-full h-full"> {/* Center the image */}
                                     <img
@@ -61,7 +66,19 @@ const Viewfull = () => {
                 {/* Post Description */}
                 <div className="flex flex-col justify-center p-4 m-4 text-sm font-semibold sm:text-base">
                     {paragraphs.map((paragraph, index) => (
-                        <p key={index} className="mb-4">{paragraph}</p> // Add margin-bottom to separate paragraphs
+                        <div key={index}>
+                            <p className="mb-4">{paragraph}</p>
+                            {/* Insert second image after the third paragraph if available */}
+                            {index === 4 && secondImage && (
+                                <div className="flex justify-center my-6">
+                                    <img
+                                        src={secondImage}
+                                        alt="Second Post Image"
+                                        className="w-full max-h-96 object-contain rounded-lg shadow-lg"
+                                    />
+                                </div>
+                            )}
+                        </div>
                     ))}
                 </div>
             </div>
