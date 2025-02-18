@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { RxAvatar as Avatar } from "react-icons/rx";
 import { FaChevronDown, FaChevronUp, FaBars, FaTimes } from "react-icons/fa"; // Icons for menu
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +10,9 @@ const Navbar = () => {
     const { user } = useSelector((state) => state.user)
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const avatarRef = useRef(null);
+    const localRef = useRef(null);
 
     const [menuOpen, setMenuOpen] = useState(false); // Controls main menu
     const [avatarDropdownOpen, setAvatarDropdownOpen] = useState(false); // Controls avatar dropdown
@@ -32,6 +35,26 @@ const Navbar = () => {
         navigate("/")
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                avatarRef.current && !avatarRef.current.contains(event.target)
+            ) {
+                setAvatarDropdownOpen(false);
+            }
+            if (
+                localRef.current && !localRef.current.contains(event.target)
+            ) {
+                setLocalDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
         <nav className="bg-black text-white h-16 flex items-center justify-between fixed top-0 left-0 w-full z-50">
             {/* Hamburger Menu (for small screens) */}
@@ -50,7 +73,7 @@ const Navbar = () => {
                     className={`md:flex md:space-x-7 font-bold bg-black md:bg-transparent transition-all duration-300 md:items-center absolute md:static top-16 left-0 w-full md:w-auto ${menuOpen ? "block" : "hidden"}`}
                 >
                     <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" onClick={handleHomeClick}>Home</li>
-                    <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700 relative" onClick={toggleLocalDropdown}>
+                    <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700 relative" onClick={toggleLocalDropdown} ref={localRef}>
                         <span className="flex items-center gap-1">
                             Local {localDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
                         </span>
@@ -61,18 +84,22 @@ const Navbar = () => {
                                 <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/sports">Sports</Link></li>
                                 <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/story">Story</Link></li>
                                 <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/farming">Farming</Link></li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/health">Tourism</Link></li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/sports">Culture</Link></li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/story">Education</Link></li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/farming">General</Link></li>
                             </ul>
                         )}
                     </li>
                     <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">World</li>
-                    <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" ><a href="/download">ePdf</a></li>
+                    <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" ><a href="/download">ePage</a></li>
                     <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700"><Link to="/contactus">ContactUs</Link></li>
                 </ul>
             </div>
 
             {/* Avatar (Visible on all screens) */}
             {user ? (
-                <div className="pr-5 cursor-pointer relative">
+                <div className="pr-5 cursor-pointer relative" ref={avatarRef}>
                     {/* Avatar for larger screens */}
                     <div className="hidden md:block">
                         <Avatar size={40} onClick={toggleAvatarDropdown} />

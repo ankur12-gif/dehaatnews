@@ -26,7 +26,7 @@ const Local = () => {
                             className="bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                         >
                             <Newscard
-                                title={i.title.slice(0, 45)}
+                                title={i.title}
                                 link={`/viewfull/${i._id}`}
                                 description={
                                     i.description

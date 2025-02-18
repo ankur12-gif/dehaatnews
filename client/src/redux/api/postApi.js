@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+const Url = import.meta.env.VITE_SERVER
+
 export const postApi = createApi({
     reducerPath: "postApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: `${import.meta.env.VITE_SERVER}/api/v1/posts/`,
+        baseUrl: `${Url}/api/v1/posts/`,
     }),
     tagTypes: ["posts"],
 
