@@ -133,7 +133,7 @@ const CreatePost = () => {
                             multiple
                             required
                             onChange={photos.changeHandler}
-                            className="w-full"
+                            className="w-auto bg-gray-300 p-1 hover:bg-gray-700 hover:text-white rounded-2xl"
                         />
                     </div>
                     <button

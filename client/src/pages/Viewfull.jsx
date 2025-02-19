@@ -34,7 +34,7 @@ const Viewfull = () => {
         <div className="bg-gray-600 pt-20 min-h-screen flex justify-center p-4">
             <div className="bg-white h-auto w-full sm:w-3/4 md:w-1/2 rounded-lg m-2">
                 {/* Post Title */}
-                <div className="flex justify-center p-2 m-4 font-bold text-xl sm:text-3xl">
+                <div className="flex justify-center p-2 m-4 font-bold text-2xl sm:text-3xl">
                     {data.post.title}
                 </div>
 
@@ -60,14 +60,14 @@ const Viewfull = () => {
                         ))}
                     </Swiper>
                 ) : (
-                    <p className="text-center text-gray-600 p-4">No images selected</p>
+                    <p className="text-center text-gray-600 p-4">No images available</p>
                 )}
 
                 {/* Post Description */}
-                <div className="flex flex-col justify-center p-4 m-4 text-sm font-semibold sm:text-base">
+                <div className="flex flex-col justify-center p-4 m-4 text-lg font-semibold sm:text-base">
                     {paragraphs.map((paragraph, index) => (
                         <div key={index}>
-                            <p className="mb-4">{paragraph}</p>
+                            <p className="mb-4 text-lgl">{paragraph}</p>
                             {/* Insert second image after the third paragraph if available */}
                             {index === 4 && secondImage && (
                                 <div className="flex justify-center my-6">

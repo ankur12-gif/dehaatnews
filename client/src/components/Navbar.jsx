@@ -5,9 +5,12 @@ import { FaChevronDown, FaChevronUp, FaBars, FaTimes } from "react-icons/fa"; //
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userNotExist } from "../redux/reducer/userReducer";
+import { setCategory } from "../redux/reducer/postReducer";
+
 
 const Navbar = () => {
     const { user } = useSelector((state) => state.user)
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -79,15 +82,15 @@ const Navbar = () => {
                         </span>
                         {localDropdownOpen && (
                             <ul className="absolute left-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg z-50">
-                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/crime">Crime</Link></li>
-                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/health">Health</Link></li>
-                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/sports">Sports</Link></li>
-                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/story">Story</Link></li>
-                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/farming">Farming</Link></li>
-                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/health">Tourism</Link></li>
-                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/sports">Culture</Link></li>
-                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/story">Education</Link></li>
-                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200"><Link to="/local/farming">General</Link></li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200" onClick={() => { dispatch(setCategory("general")) }} >General</li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200" onClick={() => { dispatch(setCategory("crime")) }}>Crime</li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200" onClick={() => { dispatch(setCategory("health")) }}>Health</li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200" onClick={() => { dispatch(setCategory("sports")) }}>Sports</li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200" onClick={() => { dispatch(setCategory("story")) }}>Story</li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200" onClick={() => { dispatch(setCategory("farming")) }}>Farming</li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200" onClick={() => { dispatch(setCategory("tourism")) }} >Tourism</li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200" onClick={() => { dispatch(setCategory("culture")) }} >Culture</li>
+                                <li className="cursor-pointer px-3 py-2 hover:bg-gray-200" onClick={() => { dispatch(setCategory("education")) }} >Education</li>
                             </ul>
                         )}
                     </li>
