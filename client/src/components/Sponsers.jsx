@@ -1,53 +1,78 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
+import { useGetAllSponsorsQuery } from "../redux/api/sponsorsApi";
 
 const Sponsers = () => {
-    const slides = [
-        { url: "./src/images/ngo1.jpg" },
-        { url: "./src/images/ngo2.jpg" },
-        { url: "./src/images/ngo3.jpg" },
-        { url: "./src/images/ngo4.jpg" },
-        { url: "./src/images/ngo5.jpg" },
-        { url: "./src/images/ngo6.jpg" },
-        { url: "./src/images/ngo7.jpg" },
-        { url: "./src/images/ngo8.jpg" },
-    ];
-
+    const { data } = useGetAllSponsorsQuery();
+    const [slides, setSlides] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    // Update slides when data is fetched
+    useEffect(() => {
+        if (data?.sponsors) {
+            const imageUrls = data.sponsors.map((sponsor) => ({
+                url: sponsor.photos[0]?.url || "", // Handle case where photos might be missing
+            }));
+            setSlides(imageUrls);
+        }
+    }, [data]);
+
+    // Auto-slide every 2 seconds
+    useEffect(() => {
+        const interval = setTimeout(() => {
+            nextSlide();
+        }, 2000);
+        return () => clearTimeout(interval); // Cleanup timeout on component unmount
+    }, [currentIndex, slides]);
+
     const prevSlide = () => {
-        setCurrentIndex(currentIndex === 0 ? slides.length - 1 : currentIndex - 1);
+        setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
     };
 
     const nextSlide = () => {
-        setCurrentIndex(currentIndex === slides.length - 1 ? 0 : currentIndex + 1);
+        setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     };
 
     return (
-        <div className="w-full h-auto bg-gray-600 flex justify-center items-center py-8">
-            <div className="relative max-w-[1400px] w-full sm:w-3/4 h-[300px] sm:h-[780px] bg-gray-600 rounded-xl p-2 sm:p-4 shadow-lg">
+        <div className="w-1/2 h-1/2 flex justify-center items-center py-4 mx-auto m-4">
+            <div className="relative w-1/2 h-[40vh] bg-gray-600 rounded-xl p-2 shadow-lg">
                 {/* Slide */}
-                <div
-                    style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
-                    className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
-                ></div>
+                {slides.length > 0 && (
+                    <div
+                        style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
+                        className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
+                    ></div>
+                )}
 
                 {/* Left Arrow */}
-                <div className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-5 text-2xl p-1 sm:p-2 bg-black/40 text-white rounded-full cursor-pointer">
-                    <BsChevronCompactLeft onClick={prevSlide} size={24} />
+                <div
+                    className="absolute top-1/2 -translate-y-1/2 left-2 text-lg p-1 bg-black/40 text-white rounded-full cursor-pointer"
+                    onClick={prevSlide}
+                >
+                    <BsChevronCompactLeft size={20} />
                 </div>
 
                 {/* Right Arrow */}
-                <div className="absolute top-1/2 -translate-y-1/2 right-2 sm:right-5 text-2xl p-1 sm:p-2 bg-black/40 text-white rounded-full cursor-pointer">
-                    <BsChevronCompactRight onClick={nextSlide} size={24} />
+                <div
+                    className="absolute top-1/2 -translate-y-1/2 right-2 text-lg p-1 bg-black/40 text-white rounded-full cursor-pointer"
+                    onClick={nextSlide}
+                >
+                    <BsChevronCompactRight size={20} />
                 </div>
 
                 {/* Dots */}
-                <div className="flex justify-center py-2 sm:py-4">
-                    {slides.map((_slide, index) => (
-                        <div key={index} onClick={() => setCurrentIndex(index)} className="text-2xl cursor-pointer">
-                            <RxDotFilled className={currentIndex === index ? "text-white" : "text-gray-400"} size={16} />
+                <div className="flex justify-center py-2">
+                    {slides.map((_, index) => (
+                        <div
+                            key={index}
+                            onClick={() => setCurrentIndex(index)}
+                            className="text-2xl cursor-pointer"
+                        >
+                            <RxDotFilled
+                                className={currentIndex === index ? "text-white" : "text-gray-400"}
+                                size={14}
+                            />
                         </div>
                     ))}
                 </div>
