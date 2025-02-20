@@ -14,7 +14,7 @@ export const newsApi = createApi({
 
     endpoints: (builder) => ({
         getAllNews: builder.query({
-            query: () => `latest?apiKey=${API_KEY}`,
+            query: () => `latest?apiKey=${API_KEY}&language=hi`,
             providesTags: ["news"]
         }),
     })

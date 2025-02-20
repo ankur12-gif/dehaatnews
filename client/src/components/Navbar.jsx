@@ -37,6 +37,11 @@ const Navbar = () => {
         navigate("/sponsors")
     };
 
+
+    const handleWorldClick = () => {
+        navigate("/worldNews")
+    };
+
     const handleLogout = () => {
         dispatch(userNotExist());
         navigate("/")
@@ -98,7 +103,7 @@ const Navbar = () => {
                             </ul>
                         )}
                     </li>
-                    <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700">World</li>
+                    <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" onClick={handleWorldClick}>World</li>
                     <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" ><a href="/download">ePage</a></li>
                     <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700"><Link to="/contactus">About Us</Link></li>
                 </ul>
