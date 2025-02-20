@@ -35,8 +35,9 @@ const Sponsers = () => {
     };
 
     return (
-        <div className="w-1/2 h-1/2 flex justify-center items-center py-4 mx-auto m-4">
-            <div className="relative w-1/2 h-[40vh] bg-gray-600 rounded-xl p-2 shadow-lg">
+        <div className="w-full md:w-1/2 h-auto flex justify-center items-center py-4 mx-auto mt-16 md:mt-4">
+            {/* Added mt-16 for small screens and md:mt-4 for larger screens */}
+            <div className="relative w-full md:w-1/2 h-[50vh] md:h-[40vh] bg-gray-600 rounded-xl p-2 shadow-lg">
                 {/* Slide */}
                 {slides.length > 0 && (
                     <div

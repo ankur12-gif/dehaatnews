@@ -6,19 +6,20 @@ import { Link } from "react-router-dom";
 
 const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
     // Function to handle copying the link to the clipboard
+
+    const url = window.location.href + link.substring(1)
     const handleCopyLink = () => {
 
-        const url = window.location.href
 
-        navigator.clipboard.writeText(url + link.substring(1)).then(() => {
+        navigator.clipboard.writeText(url).then(() => {
             alert("Link copied to clipboard!");
         });
     };
 
     // Function to generate social media share URLs
-    const shareOnWhatsApp = `https://wa.me/?text=${encodeURIComponent(title + " " + link)}`;
-    const shareOnFacebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
-    const shareOnTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(link)}&text=${encodeURIComponent(title)}`;
+    const shareOnWhatsApp = `https://wa.me/?text=${encodeURIComponent(title + " " + url)}`;
+    const shareOnFacebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+    const shareOnTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
 
     return (
         <div className="p-4 border-b border-gray-300 relative">
