@@ -33,6 +33,10 @@ const Navbar = () => {
         navigate("/admin")
     }
 
+    const handleSponsorClick = () => {
+        navigate("/sponsors")
+    };
+
     const handleLogout = () => {
         dispatch(userNotExist());
         navigate("/")
@@ -111,13 +115,19 @@ const Navbar = () => {
                         <ul className="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg z-50">
                             <li
                                 onClick={handleAvatarClick}
-                                className="cursor-pointer px-3 py-2 hover:bg-gray-200"
+                                className="cursor-pointer px-3 py-2 hover:bg-gray-200 font-bold"
                             >
-                                Profile
+                                Posts
+                            </li>
+                            <li
+                                onClick={handleSponsorClick}
+                                className="cursor-pointer px-3 py-2 hover:bg-gray-200 font-bold"
+                            >
+                                Sponsors
                             </li>
                             <li
                                 onClick={handleLogout}
-                                className="cursor-pointer px-3 py-2 hover:bg-gray-200"
+                                className="cursor-pointer px-3 py-2 hover:bg-gray-200 font-bold"
                             >
                                 Logout
                             </li>

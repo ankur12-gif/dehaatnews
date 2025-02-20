@@ -15,6 +15,8 @@ const Viewfull = lazy(() => import("./pages/Viewfull.jsx"));
 const Update = lazy(() => import("./pages/Update.jsx"));
 const Download = lazy(() => import("./pages/Download.jsx"));
 const Contactus = lazy(() => import("./pages/Contactus.jsx"));
+const SponsorsTable = lazy(() => import("./pages/SponsorsTable.jsx"));
+const Createsponsor = lazy(() => import("./pages/Createsponsors.jsx"));
 
 
 
@@ -46,6 +48,8 @@ const App = () => {
             <Route path={"/admin"} element={<Admin />}></Route>
             <Route path={"/createPost"} element={<Createpost />} />
             <Route path={"/update/:id"} element={<Update />} />
+            <Route path={"/sponsors"} element={<SponsorsTable />} />
+            <Route path={"/createSponsors"} element={<Createsponsor />} />
           </Route>
         </Routes>
         <Toaster position="bottom-center" />
