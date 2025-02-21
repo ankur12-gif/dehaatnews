@@ -12,7 +12,7 @@ const Contactus = () => {
             </div>
 
             {/* Content */}
-            <div className="max-w-4xl w-full text-base sm:text-lg leading-relaxed text-justify bg-gray-700 p-4 sm:p-6 rounded-lg shadow-lg">
+            <div className="max-w-4xl w-full text-base sm:text-lg leading-relaxed text-justify p-4 sm:p-6 rounded-lg shadow-lg">
                 देहात न्यूज में आपका स्वागत है। यहां हम मानते हैं कि हर आवाज मायने रखती
                 है। हमारे देहाती जीवन में अनगिनत अनकही कहानियां हैं। संघर्ष, हिम्मत और
                 उम्मीद की कहानियां। शिक्षा की कमी, जल संकट, सड़कों का विकास, परिवहन की

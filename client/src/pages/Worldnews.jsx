@@ -9,8 +9,6 @@ import { useGetAllNewsQuery } from "../redux/api/newsApi.js";
 const Worldnews = () => {
     const { data, isLoading } = useGetAllNewsQuery();
 
-    console.log(data)
-
 
     if (isLoading) return <Loader />;
 
