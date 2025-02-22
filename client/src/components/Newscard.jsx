@@ -25,7 +25,7 @@ const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
         <div className="p-4 border-b border-gray-300 relative">
             {/* Source ID in Top-Right Corner */}
             <div className="absolute top-2 right-4 bg-red-800 text-white px-2 py-1 rounded-lg text-sm">
-                DehattNews
+                DehaatNews
             </div>
 
             {/* Title */}

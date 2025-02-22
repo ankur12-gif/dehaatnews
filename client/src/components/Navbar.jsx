@@ -25,7 +25,8 @@ const Navbar = () => {
     const toggleLocalDropdown = () => setLocalDropdownOpen(!localDropdownOpen);
 
     const handleHomeClick = () => {
-        navigate("/")
+        dispatch(setCategory("general"))
+        navigate("/local")
     }
 
     const handleAvatarClick = () => {
@@ -45,6 +46,11 @@ const Navbar = () => {
         dispatch(userNotExist());
         navigate("/")
     };
+
+    const handlelogoClick = () => {
+        dispatch(setCategory("general"))
+        navigate("/local")
+    }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -76,7 +82,7 @@ const Navbar = () => {
             </div>
 
             {/* Logo */}
-            <div className="text-2xl font-extrabold p-5 md:mr-auto cursor-pointer" onClick={() => { navigate("/") }}>dehaatNews</div>
+            <div className="text-2xl font-extrabold p-5 md:mr-auto cursor-pointer" onClick={handlelogoClick}>dehaatNews</div>
 
             {/* Navigation Links and Avatar */}
             <div className="flex items-center justify-end flex-grow pr-5"> {/* Align to right */}
