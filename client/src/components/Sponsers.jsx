@@ -31,7 +31,9 @@ const Sponsers = () => {
     };
 
     const nextSlide = () => {
-        setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+        // Generate a random index
+        const randomIndex = Math.floor(Math.random() * slides.length);
+        setCurrentIndex(randomIndex);
     };
 
     return (
