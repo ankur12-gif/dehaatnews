@@ -12,31 +12,43 @@ const Contactus = () => {
             </div>
 
             {/* Content */}
-            <div className="max-w-4xl w-full text-base sm:text-lg leading-relaxed text-justify p-4 sm:p-6 rounded-lg shadow-lg">
-                देहात न्यूज में आपका स्वागत है। यहां हम मानते हैं कि हर आवाज मायने रखती
-                है। हमारे देहाती जीवन में अनगिनत अनकही कहानियां हैं। संघर्ष, हिम्मत और
-                उम्मीद की कहानियां। शिक्षा की कमी, जल संकट, सड़कों का विकास, परिवहन की
-                समस्याएं। हम यहां उन रोजमर्रा के समस्याओं की आवाज को बुलंद करने आए हैं
-                जो अक्सर अनसुनी रह जाती हैं। हम आपके गांव-देहात और कस्बों की समस्याओं को
-                उजागर करेंगे, यह सुनिश्चित करेंगे कि आपकी चिंताएं उन तक पहुंचे जो बदलाव
-                ला सकते हैं। आइए मिलकर जागरूकता बढ़ाएं, सरकार को कार्रवाई के लिए प्रेरित
-                करें और ठोस समाधान की ओर कदम बढ़ाएं। बदलाव का समय आ गया है और यह शुरुआत
-                आपसे होती है। देहात न्यूज से जुड़े रहें—जहां आपकी कहानी मायने रखती है।
+            <div className="max-w-4xl w-full text-base sm:text-lg leading-relaxed text-justify p-4 sm:p-6 rounded-lg shadow-lg bg-black">
+                देहात न्यूज में आपका स्वागत है।आपके द्वारा उठाए गए मुद्दे, आपकी सोच और
+                चिंता वास्तव में बहुत महत्वपूर्ण हैं। ग्रामीण जीवन में शिक्षा, जल संकट,
+                सड़कों का विकास और परिवहन जैसी समस्याएं आम हैं। इन समस्याओं को उजागर
+                करने और समाधान खोजने के लिए एक साझा प्रयास की आवश्यकता है। साथ ही कहीं
+                ऐसे होनहार हैं उनकी आवाज गांव कस्बा से बाहर नहीं आ पाती है, उनकी आवाज को
+                भी साझा प्रयास से समाज और सरकार तक पहुंचाएंगे। आइए मिलकर जागरूकता बढ़ाएं
+                और सरकार को कार्रवाई के लिए प्रेरित करें। हमें अपने गांवदेहात और कस्बों
+                की आवाज को बुलंद करने के लिए एकजुट होना चाहिए और ठोस समाधान की ओर कदम
+                बढ़ाना चाहिए। बदलाव का समय आ गया है, और यह शुरुआत आपसे ही होनी चाहिए।
             </div>
 
             {/* Social Media Icons */}
             <div className="flex gap-x-6 mt-6">
-                <a href="https://x.com/Dehaatnews14923?t=GU4594yz6FZNpwbQF8Q-Kw&s=08" target="_blank" rel="noopener noreferrer">
-                    <FaSquareXTwitter className="text-3xl sm:text-4xl text-black hover:text-blue-700 hover:scale-110 transition-transform duration-300" />
+                <a
+                    href="https://x.com/Dehaatnews14923?t=GU4594yz6FZNpwbQF8Q-Kw&s=08"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <FaSquareXTwitter className="text-3xl sm:text-4xl text-white hover:text-black hover:scale-110 transition-transform duration-300" />
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=61573410870548&mibextid=wwXIfr&mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
-                    <FaFacebook className="text-3xl sm:text-4xl text-black hover:text-blue-900 hover:scale-110 transition-transform duration-300" />
+                <a
+                    href="https://www.facebook.com/profile.php?id=61573410870548&mibextid=wwXIfr&mibextid=wwXIfr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <FaFacebook className="text-3xl sm:text-4xl  text-white hover:text-black hover:scale-110 transition-transform duration-300" />
                 </a>
-                <a href="https://youtube.com/@khuntiupdates?si=JJIFZ2OOpTr96_qO" target="_blank" rel="noopener noreferrer">
-                    <FaYoutube className="text-3xl sm:text-4xl text-black hover:text-red-800 hover:scale-110 transition-transform duration-300" />
+                <a
+                    href="https://youtube.com/@khuntiupdates?si=JJIFZ2OOpTr96_qO"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <FaYoutube className="text-3xl sm:text-4xl  text-white hover:text-black hover:scale-110 transition-transform duration-300" />
                 </a>
                 <a href="mailto:dehaatnews@gmail.com">
-                    <MdEmail className="text-3xl sm:text-4xl text-black hover:text-gray-500 hover:scale-110 transition-transform duration-300" />
+                    <MdEmail className="text-3xl sm:text-4xl  text-white hover:text-black hover:scale-110 transition-transform duration-300" />
                 </a>
             </div>
         </div>
