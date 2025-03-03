@@ -1,13 +1,10 @@
 import { lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
 import Protectedroute from "./components/Protectedroute.jsx";
-// import { useGetAllNewsQuery } from "./redux/api/newsApi.js";
-
+import Layout from "./components/Layout.jsx"; // Import the Layout component
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Signin = lazy(() => import("./pages/Signin.jsx"));
-const Navbar = lazy(() => import("./components/Navbar.jsx"));
 const Admin = lazy(() => import("./pages/Admin.jsx"));
 const Createpost = lazy(() => import("./pages/CreatePost.jsx"));
 const Local = lazy(() => import("./pages/Local.jsx"));
@@ -19,44 +16,31 @@ const SponsorsTable = lazy(() => import("./pages/SponsorsTable.jsx"));
 const Createsponsor = lazy(() => import("./pages/Createsponsors.jsx"));
 const Worldnews = lazy(() => import("./pages/Worldnews.jsx"));
 
-
-
-
 const App = () => {
-
-  // const { data, isLoading } = useGetAllNewsQuery();
-
-  // if (!isLoading)
-  //   console.log(data)
-
-
-
   return (
-    <>
-      <Router>
-        <Navbar />
+    <Router>
+      <Routes>
+        {/* Public Pages */}
+        <Route path="/" element={<Layout title="Local News - Dehaat News"><Local /></Layout>} />
+        <Route path="/home" element={<Layout title="Home - Dehaat News"><Home /></Layout>} />
+        <Route path="/signin" element={<Layout title="Sign In - Dehaat News"><Signin /></Layout>} />
+        <Route path="/local" element={<Layout title="Local News - Dehaat News"><Local /></Layout>} />
+        <Route path="/contactus" element={<Layout title="Contact Us - Dehaat News"><Contactus /></Layout>} />
+        <Route path="/download" element={<Layout title="Download - Dehaat News"><Download /></Layout>} />
+        <Route path="/viewfull/:id" element={<Layout title="View Full News - Dehaat News"><Viewfull /></Layout>} />
+        <Route path="/worldNews" element={<Layout title="World News - Dehaat News"><Worldnews /></Layout>} />
 
-        <Routes>
-          <Route path={"/home"} element={<Home />}></Route>
-          <Route path={"/signin"} element={<Signin />}></Route>
-          <Route path={"/local"} element={<Local />} />
-          <Route path={"/contactus"} element={<Contactus />} />
-          <Route path={"/"} element={<Local />} />
-          <Route path={"/download"} element={<Download />} />
-          <Route path={"/viewfull/:id"} element={<Viewfull />} />
-          <Route path={"/worldNews"} element={<Worldnews />} />
-          <Route path={""} element={<Protectedroute />}>
-            <Route path={"/admin"} element={<Admin />}></Route>
-            <Route path={"/createPost"} element={<Createpost />} />
-            <Route path={"/update/:id"} element={<Update />} />
-            <Route path={"/sponsors"} element={<SponsorsTable />} />
-            <Route path={"/createSponsors"} element={<Createsponsor />} />
-          </Route>
-        </Routes>
-        <Toaster position="bottom-center" />
-      </Router>
-    </>
+        {/* Protected Routes (Only for Admins) */}
+        <Route path="" element={<Protectedroute />}>
+          <Route path="/admin" element={<Layout title="Admin Panel - Dehaat News"><Admin /></Layout>} />
+          <Route path="/createPost" element={<Layout title="Create Post - Dehaat News"><Createpost /></Layout>} />
+          <Route path="/update/:id" element={<Layout title="Update Post - Dehaat News"><Update /></Layout>} />
+          <Route path="/sponsors" element={<Layout title="Sponsors - Dehaat News"><SponsorsTable /></Layout>} />
+          <Route path="/createSponsors" element={<Layout title="Create Sponsor - Dehaat News"><Createsponsor /></Layout>} />
+        </Route>
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
