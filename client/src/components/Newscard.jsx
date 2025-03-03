@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
     // Function to handle copying the link to the clipboard
 
-    const url = window.location.href + link.substring(1)
+    const url = `${window.location.origin}${link}`;
+
     const handleCopyLink = () => {
 
 
