@@ -2,12 +2,45 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/dehaatnews.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dehaat News</title>
+
+    <title>Dehaat News - Stay Updated</title>
+    <meta
+      name="description"
+      content="Get the latest news and updates on Dehaat News."
+    />
+
+    <!-- Open Graph Meta Tags (For Facebook, LinkedIn, WhatsApp) -->
+    <meta property="og:title" content="Dehaat News" />
+    <meta
+      property="og:description"
+      content="Stay updated with agricultural and global news."
+    />
+    <meta property="og:image" content="https://dehaatnews.com/dehaatnews.jpg" />
+    <meta property="og:url" content="https://dehaatnews.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dehaat News" />
+    <meta
+      name="twitter:description"
+      content="Get the latest updates from Dehaat News."
+    />
+    <meta
+      name="twitter:image"
+      content="https://dehaatnews.com/dehaatnews.jpg"
+    />
+
+    <!-- Ensure No Indexing Issues -->
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
   </head>
   <body>
+    <!-- 🚀 This is REQUIRED for React to render -->
     <div id="root"></div>
+
+    <!-- 🚀 This loads your React app -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
