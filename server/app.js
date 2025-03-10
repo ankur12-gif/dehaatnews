@@ -57,7 +57,7 @@ const initializeServer = async () => {
         app.use("/api/v1/sponsors", sponsorsRoute);
 
         app.listen(PORT, () => {
-            console.log(App is listening on port ${PORT});
+            console.log(`App is listening on port ${PORT}`);
         });
     } catch (error) {
         console.error("Error initializing server:", error);
