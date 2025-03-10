@@ -22,7 +22,7 @@ export const envMode = process.env.NODE_ENV || "PRODUCTION";
 const mongoUri = process.env.MONGO_URI;
 export const myCache = new NodeCache();
 
-console.log("Allowed Client URL:", process.env.CLIENT_URL);
+console.log(process.env.CLIENT_URL);
 
 const corsOptions = {
     origin: [
@@ -31,23 +31,11 @@ const corsOptions = {
         process.env.CLIENT_URL,
     ],
     credentials: true,
-    optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
 app.use(morgan("dev"));
-
-// ✅ Ensure Express Parses JSON Correctly with UTF-8
-app.use(express.json({ limit: "10mb", type: "application/json", charset: "utf-8" }));
-
-// ✅ Set Headers for UTF-8 Encoding Globally
-app.use((req, res, next) => {
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL || "*");
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    next();
-});
+app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send("Hello World");
@@ -60,28 +48,19 @@ const initializeServer = async () => {
             api_key: process.env.CLOUD_API_KEY,
             api_secret: process.env.CLOUD_API_SECRET,
         });
-
         AdminPassKey = await hashPassword(process.env.ADMIN_PASS_KEY);
+
         await connectToMongoDB(mongoUri);
 
-        // ✅ Ensure Routes Handle UTF-8 Data Correctly
         app.use("/api/v1/user", userRoute);
         app.use("/api/v1/posts", postsRoute);
         app.use("/api/v1/sponsors", sponsorsRoute);
 
-        // ✅ Debugging: Log Incoming Hindi Text
-        app.use((req, res, next) => {
-            if (req.body && typeof req.body === "object") {
-                console.log("🔍 Incoming Request Data:", JSON.stringify(req.body, null, 2));
-            }
-            next();
-        });
-
         app.listen(PORT, () => {
-            console.log(`🚀 App is running on port ${PORT}`);
+            console.log(App is listening on port ${PORT});
         });
     } catch (error) {
-        console.error("❌ Error initializing server:", error);
+        console.error("Error initializing server:", error);
     }
 };
 
