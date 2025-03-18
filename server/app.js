@@ -8,12 +8,11 @@ import sponsorsRoute from "./src/routes/sponsor.js";
 import { v2 as cloudinary } from "cloudinary";
 import morgan from "morgan";
 import NodeCache from "node-cache";
-import path from "path";
-import fs from "fs";
 
 dotenv.config({ path: "./.env" });
 
 const app = express();
+
 const PORT = process.env.PORT;
 export let AdminPassKey;
 
@@ -40,54 +39,6 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send("Hello World");
-});
-
-// ✅ Serve Dynamic Open Graph Meta Tags for News Articles
-app.get("/news/:id", async (req, res) => {
-    const { id } = req.params;
-
-    // Simulate fetching news article from the database
-    const newsArticle = {
-        title: `Breaking News #${id}`,
-        description: `Read the latest news article #${id} only on Dehaat News.`,
-        image: `https://dehaatnews.com/news-image-${id}.jpg`,
-        url: `https://dehaatnews.com/news/${id}`,
-    };
-
-    const htmlTemplate = `
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${newsArticle.title}</title>
-        <meta name="description" content="${newsArticle.description}">
-        <meta property="og:title" content="${newsArticle.title}">
-        <meta property="og:description" content="${newsArticle.description}">
-        <meta property="og:image" content="${newsArticle.image}">
-        <meta property="og:url" content="${newsArticle.url}">
-        <meta property="og:type" content="article">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="${newsArticle.title}">
-        <meta name="twitter:description" content="${newsArticle.description}">
-        <meta name="twitter:image" content="${newsArticle.image}">
-      </head>
-      <body>
-        <script>
-          window.location.href = "${newsArticle.url}";
-        </script>
-      </body>
-    </html>`;
-
-    res.send(htmlTemplate);
-});
-
-// ✅ Serve React Frontend
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "frontend", "dist")));
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
 const initializeServer = async () => {
