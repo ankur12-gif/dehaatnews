@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { TryCatch } from "../middleware/error.js";
 import { Posts } from "../models/posts.js";
-import { deleteFromImageKit, uploadToImageKit } from "../utils/features.js"; // ✅ Use ImageKit
+import { deleteFromImageKit, uploadToImageKit } from "../utils/features.js";
 import { myCache } from "../../app.js";
 import { TTL } from "../../app.js";
 import PDFDocument from "pdfkit";
@@ -15,7 +15,7 @@ const createPost = TryCatch(async (req, res) => {
     if (!photos) return next(new Error("Please upload photos", 400));
     if (!title || !description || !category) return next(new Error("Please enter all fields"));
 
-    const photosUrl = await uploadToImageKit(photos); // ✅ Upload to ImageKit
+    const photosUrl = await uploadToImageKit(photos);
 
     const post = await Posts.create({
         title,
@@ -61,7 +61,7 @@ const deleteImage = TryCatch(async (req, res, next) => {
 
     if (!post) return next(new Error("Post not found", 404));
 
-    await deleteFromImageKit(imageId); // ✅ Delete from ImageKit
+    await deleteFromImageKit(imageId);
 
     post.photos = post.photos.filter((i) => i.public_id !== imageId);
     await post.save();
@@ -84,7 +84,7 @@ const updatePost = TryCatch(async (req, res, next) => {
     if (description) post.description = description;
 
     if (photos && photos.length > 0) {
-        const ids = await uploadToImageKit(photos); // ✅ Upload new images to ImageKit
+        const ids = await uploadToImageKit(photos);
         post.photos.push(...ids);
     }
 
@@ -104,7 +104,7 @@ const deletePost = TryCatch(async (req, res, next) => {
     if (!post) return next(new Error("Post does not exist", 400));
 
     const ids = post.photos.map((i) => i.public_id);
-    await deleteFromImageKit(ids); // ✅ Delete all post images from ImageKit
+    await deleteFromImageKit(ids);
 
     await Posts.deleteOne({ _id: postId });
 

@@ -1,5 +1,6 @@
-import { lazy } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { lazy, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import ReactGA from "react-ga4";
 import Protectedroute from "./components/Protectedroute.jsx";
 import Layout from "./components/Layout.jsx"; // Import the Layout component
 
@@ -16,9 +17,23 @@ const SponsorsTable = lazy(() => import("./pages/SponsorsTable.jsx"));
 const Createsponsor = lazy(() => import("./pages/Createsponsors.jsx"));
 const Worldnews = lazy(() => import("./pages/Worldnews.jsx"));
 
+ReactGA.initialize(import.meta.env.VITE_GOOGLEID);
+
+const Analytics = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send("pageview", location.pathname);
+  }, [location]);
+
+
+  return null;
+};
+
 const App = () => {
   return (
     <Router>
+      <Analytics />
       <Routes>
         {/* Public Pages */}
         <Route path="/" element={<Layout title="Local News - Dehaat News"><Local /></Layout>} />
