@@ -5,10 +5,9 @@ import { connectToMongoDB, hashPassword } from "./src/utils/features.js";
 import userRoute from "./src/routes/admin.js";
 import postsRoute from "./src/routes/post.js";
 import sponsorsRoute from "./src/routes/sponsor.js";
-import { v2 as cloudinary } from "cloudinary";
+import ImageKit from "imagekit";
 import morgan from "morgan";
 import NodeCache from "node-cache";
-
 dotenv.config({ path: "./.env" });
 
 const app = express();
@@ -21,6 +20,7 @@ export const TTL = process.env.TIME_TO_LIVE;
 export const envMode = process.env.NODE_ENV || "PRODUCTION";
 const mongoUri = process.env.MONGO_URI;
 export const myCache = new NodeCache();
+
 
 console.log(process.env.CLIENT_URL);
 
@@ -41,14 +41,17 @@ app.get("/", (req, res) => {
     res.send("Hello World");
 });
 
+export const imagekit = new ImageKit({
+    publicKey: process.env.PUBLIC_KEY,
+    privateKey: process.env.PRIVATE_KEY,
+    urlEndpoint: process.env.URL_ENDPOINT,
+});
+
 const initializeServer = async () => {
     try {
-        cloudinary.config({
-            cloud_name: process.env.CLOUD_NAME,
-            api_key: process.env.CLOUD_API_KEY,
-            api_secret: process.env.CLOUD_API_SECRET,
-        });
         AdminPassKey = await hashPassword(process.env.ADMIN_PASS_KEY);
+
+
 
         await connectToMongoDB(mongoUri);
 
