@@ -3,13 +3,13 @@ import { BsWhatsapp as Watsapp, BsFacebook as Facebook, BsTwitter as Twitter } f
 import { FaRegCopy } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const server = import.meta.env.VITE_SERVER;
+
 
 const Newscard = ({ title, link, description, pubDate, imageUrl, postId }) => {
 
     // const url = `${window.location.origin}${link}`;
-    const metaUrl = `${server}/api/v1/posts/meta/${postId}`;
-    const shareUrl = `${server}/viewfull/${postId}`
+    const metaUrl = `dehaatnews.com/api/v1/posts/meta/${postId}`;
+    const shareUrl = `dehaatnews.com/viewfull/${postId}`
     // Function to handle copying the link to clipboard
     const handleCopyLink = () => {
         navigator.clipboard.writeText(shareUrl).then(() => {
