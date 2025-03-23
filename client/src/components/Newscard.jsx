@@ -4,10 +4,9 @@ import { BsWhatsapp as Watsapp, BsFacebook as Facebook, BsTwitter as Twitter } f
 import { FaRegCopy } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const Newscard = ({ title, link, description, pubDate, imageUrl, postId }) => {
-    // const url = `${window.location.origin}${link}`;
-    const url = `https://dehaatnews.com/api/v1/posts/meta/${postId}`;
-    // Function to handle copying the link to clipboard
+const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
+    const url = `${window.location.origin}${link}`;
+
     const handleCopyLink = () => {
         navigator.clipboard.writeText(url).then(() => {
             alert("Link copied to clipboard!");
