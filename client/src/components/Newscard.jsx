@@ -1,49 +1,30 @@
 /* eslint-disable react/prop-types */
-import { Helmet } from "react-helmet-async";
 import { BsWhatsapp as Watsapp, BsFacebook as Facebook, BsTwitter as Twitter } from "react-icons/bs";
 import { FaRegCopy } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
-    const url = `${window.location.origin}${link}`;
+const server = import.meta.env.VITE_SERVER;
 
+const Newscard = ({ title, link, description, pubDate, imageUrl, postId }) => {
+
+    // const url = `${window.location.origin}${link}`;
+    const metaUrl = `${server}/api/v1/posts/meta/${postId}`;
+    const shareUrl = `${server}/viewfull/${postId}`
     // Function to handle copying the link to clipboard
     const handleCopyLink = () => {
-        navigator.clipboard.writeText(url).then(() => {
+        navigator.clipboard.writeText(shareUrl).then(() => {
             alert("Link copied to clipboard!");
         });
     };
-    console.log(imageUrl)
+
 
     // Function to generate social media share URLs
-    const shareOnWhatsApp = `https://wa.me/?text=${encodeURIComponent(title + " " + url)}`;
-    const shareOnFacebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-    const shareOnTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+    const shareOnWhatsApp = `https://wa.me/?text=${encodeURIComponent(title + " " + metaUrl)}`;
+    const shareOnFacebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(metaUrl)}`;
+    const shareOnTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(metaUrl)}&text=${encodeURIComponent(title)}`;
 
     return (
         <>
-            {/* 🚀 Dynamic Meta Tags for Correct Social Media Previews */}
-            <Helmet>
-                <title>{title} - Dehaat News</title>
-                <meta name="description" content={description} />
-
-                {/* Open Graph Meta Tags (Facebook, WhatsApp, LinkedIn) */}
-                <meta property="og:title" content={title} />
-                <meta property="og:description" content={description} />
-                <meta property="og:image" content={imageUrl} />
-                <meta property="og:image:secure_url" content={imageUrl} />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:type" content="article" />
-                <meta property="og:url" content={url} />
-
-                {/* Twitter Meta Tags */}
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={title} />
-                <meta name="twitter:description" content={description} />
-                <meta name="twitter:image" content={imageUrl} />
-            </Helmet>
-
 
             <div className="p-4 border-b border-gray-300 relative">
                 {/* Source ID in Top-Right Corner */}

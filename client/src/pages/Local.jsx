@@ -43,6 +43,7 @@ const Local = () => {
                         >
                             <Newscard
                                 title={i.title}
+                                postId={i._id}
                                 link={`/viewfull/${i._id}`}
                                 description={
                                     i.description
