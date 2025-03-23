@@ -13,8 +13,7 @@ const createPost = TryCatch(async (req, res) => {
     const photos = req.files;
 
     if (!photos) return next(new Error("Please upload photos", 400));
-    if (!title || !description || !category)
-        return next(new Error("Please enter all fields"));
+    if (!title || !description || !category) return next(new Error("Please enter all fields"));
 
     const photosUrl = await uploadToImageKit(photos);
 
@@ -26,9 +25,7 @@ const createPost = TryCatch(async (req, res) => {
     });
 
     myCache.del("allPosts");
-    return res
-        .status(201)
-        .json({ success: true, message: "Post created successfully" });
+    return res.status(201).json({ success: true, message: "Post created successfully" });
 });
 
 const getAllPosts = TryCatch(async (req, res, next) => {
@@ -72,9 +69,7 @@ const deleteImage = TryCatch(async (req, res, next) => {
     myCache.del("allPosts");
     myCache.del(`post_${postId}`);
 
-    return res
-        .status(200)
-        .json({ success: true, message: "Image deleted successfully" });
+    return res.status(200).json({ success: true, message: "Image deleted successfully" });
 });
 
 const updatePost = TryCatch(async (req, res, next) => {
@@ -97,9 +92,7 @@ const updatePost = TryCatch(async (req, res, next) => {
     myCache.del("allPosts");
     myCache.del(`post_${postId}`);
 
-    return res
-        .status(200)
-        .json({ success: true, message: "Post updated successfully" });
+    return res.status(200).json({ success: true, message: "Post updated successfully" });
 });
 
 const deletePost = TryCatch(async (req, res, next) => {
@@ -118,9 +111,7 @@ const deletePost = TryCatch(async (req, res, next) => {
     myCache.del("allPosts");
     myCache.del(`post_${postId}`);
 
-    return res
-        .status(200)
-        .json({ success: true, message: "Post deleted successfully" });
+    return res.status(200).json({ success: true, message: "Post deleted successfully" });
 });
 
 const downloadPost = TryCatch(async (req, res, next) => {
@@ -135,11 +126,8 @@ const downloadPost = TryCatch(async (req, res, next) => {
     const endDate = new Date(date);
     endDate.setHours(23, 59, 59, 999);
 
-    const posts = await Posts.find({
-        createdAt: { $gte: startDate, $lte: endDate },
-    });
-    if (posts.length === 0)
-        return next(new Error("No posts found for the given date", 404));
+    const posts = await Posts.find({ createdAt: { $gte: startDate, $lte: endDate } });
+    if (posts.length === 0) return next(new Error("No posts found for the given date", 404));
 
     // Create a PDF document
     const doc = new PDFDocument();
@@ -168,11 +156,7 @@ const downloadPost = TryCatch(async (req, res, next) => {
                 const imageResponse = await fetch(imageUrl);
                 const imageBuffer = await imageResponse.buffer();
 
-                doc.image(imageBuffer, {
-                    fit: [250, 250],
-                    align: "center",
-                    valign: "center",
-                });
+                doc.image(imageBuffer, { fit: [250, 250], align: "center", valign: "center" });
 
                 doc.y += 270; // Adjust spacing
             } catch (error) {
@@ -191,53 +175,9 @@ const downloadPost = TryCatch(async (req, res, next) => {
     doc.end();
 });
 
-const getPostMetaTags = TryCatch(async (req, res, next) => {
-    const { postId } = req.params;
-    const post = await Posts.findById(postId);
 
-    if (!post) return res.status(404).send("Post not found");
-
-    const metaTags = `
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <title>${post.title} - Dehaat News</title>
-        <meta name="description" content="Stay updated with agricultural and global news." />
-        
-        <!-- Open Graph Meta Tags -->
-        <meta property="og:title" content="${post.title}" />
-        <meta property="og:description" content="${post.description}" />
-        <meta property="og:image" content="${post.photos[0]?.url || 'https://dehaatnews.com/dehaatnews.png'
-        }" />
-        <meta property="og:url" content="https://dehaatnews.com/viewfull/${postId}" />
-        <meta property="og:type" content="article" />
-
-        <!-- Twitter Meta Tags -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="${post.title}" />
-        <meta name="twitter:description" content="${post.description}" />
-        <meta name="twitter:image" content="${post.photos[0]?.url || "https://dehaatnews.com/dehaatnews.png"
-        }" />
-        
-        <!-- Redirect to React frontend after OG tags are read -->
-        <meta http-equiv="refresh" content="0;url=https://dehaatnews.com/viewfull/${postId}">
-      </head>
-      <body>
-        <script>
-          window.location.href = "https://dehaatnews.com/viewfull/${postId}";
-        </script>
-      </body>
-    </html>
-    `;
-
-    res.send(metaTags);
-});
 
 export {
-    getPostMetaTags,
     createPost,
     getAllPosts,
     getSinglePost,

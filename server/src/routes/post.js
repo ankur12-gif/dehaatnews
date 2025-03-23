@@ -8,7 +8,6 @@ import {
     getSinglePost,
     updatePost,
     downloadPost,
-    getPostMetaTags,
 } from "../controllers/post.js";
 import { multiUpload } from "../middleware/multer.js";
 
@@ -19,7 +18,6 @@ app.get("/getAllPosts", getAllPosts);
 app.delete("/deleteImage", deleteImage);
 app.get("/download", downloadPost);
 app.get("/:postId", getSinglePost);
-app.get("/meta/:postId", getPostMetaTags);
 
 app
     .route("/:postId", adminOnly)
