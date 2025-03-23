@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const Newscard = ({ title, link, description, pubDate, imageUrl, postId }) => {
 
     // const url = `${window.location.origin}${link}`;
-    const metaUrl = `dehaatnews.com/api/v1/posts/meta/${postId}`;
+    const metaUrl = `dehaatnews.com:4000/api/v1/posts/meta/${postId}`;
     const shareUrl = `dehaatnews.com/viewfull/${postId}`
     // Function to handle copying the link to clipboard
     const handleCopyLink = () => {
