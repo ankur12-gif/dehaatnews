@@ -13,16 +13,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Dehaat News - Stay Updated</title>
-    <meta name="description" content="Get the latest news and updates on Dehaat News." />
+    <meta
+      name="description"
+      content="Get the latest news and updates on Dehaat News."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Dehaat News",
+        "url": "https://dehaatnews.com",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Dehaat News",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://dehaatnews.com/dehaatnews.png"
+          }
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://dehaatnews.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
 
+    <!-- If You Have News Articles, Add NewsArticle Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": "Dehaat News - Latest Agricultural and Global Updates",
+        "description": "Stay updated with agricultural and global news from Dehaat.",
+        "datePublished": "2024-03-25",
+        "dateModified": "2024-03-25",
+        "author": {
+          "@type": "Person",
+          "name": "Dehaat News Team"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Dehaat News",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://dehaatnews.com/dehaatnews.png"
+          }
+        },
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://dehaatnews.com/dehaatnews.png",
+          "width": 1200,
+          "height": 630
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://dehaatnews.com/latest-news"
+        }
+      }
+    </script>
     <!-- Optimized Favicon -->
     <link rel="icon" href="./dehaatnews.png" type="image/png" sizes="512x512" />
 
     <!-- Open Graph Meta Tags (For Facebook, LinkedIn, WhatsApp) -->
     <meta property="og:title" content="Dehaat News - Stay Updated" />
-    <meta property="og:description" content="Stay updated with agricultural and global news." />
+    <meta
+      property="og:description"
+      content="Stay updated with agricultural and global news."
+    />
     <meta property="og:image" content="https://dehaatnews.com/dehaatnews.png" />
-    <meta property="og:image:secure_url" content="https://dehaatnews.com/dehaatnews.png" />
+    <meta
+      property="og:image:secure_url"
+      content="https://dehaatnews.com/dehaatnews.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/png" />
@@ -33,8 +96,14 @@
     <!-- Twitter Meta Tags (For Twitter Previews) -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Dehaat News - Stay Updated" />
-    <meta name="twitter:description" content="Get the latest updates from Dehaat News." />
-    <meta name="twitter:image" content="https://dehaatnews.com/dehaatnews.png" />
+    <meta
+      name="twitter:description"
+      content="Get the latest updates from Dehaat News."
+    />
+    <meta
+      name="twitter:image"
+      content="https://dehaatnews.com/dehaatnews.png"
+    />
     <meta name="twitter:image:alt" content="Dehaat News Logo" />
 
     <!-- Ensure No Indexing Issues -->
@@ -42,8 +111,12 @@
     <meta name="googlebot" content="index, follow" />
   </head>
 
-  <body style="font-family: 'Poppins', 'Noto Sans Devanagari', Arial, Helvetica, sans-serif;">
-
+  <body
+    style="
+      font-family: 'Poppins', 'Noto Sans Devanagari', Arial, Helvetica,
+        sans-serif;
+    "
+  >
     <!-- 🚀 React App Root -->
     <div id="root"></div>
 

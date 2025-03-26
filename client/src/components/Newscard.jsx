@@ -12,7 +12,7 @@ const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
             alert("Link copied to clipboard!");
         });
     };
-    console.log(imageUrl)
+
 
     // Function to generate social media share URLs
     const shareOnWhatsApp = `https://wa.me/?text=${encodeURIComponent(title + " " + url)}`;
