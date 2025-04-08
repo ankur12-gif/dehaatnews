@@ -23,7 +23,7 @@ const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
         <>
             {/* 🚀 Dynamic Meta Tags for Correct Social Media Previews */}
             <Helmet>
-                <title>{title} - Dehaat News</title>
+                <title>{title} Dehaat News</title>
                 <meta name="description" content={description} />
 
                 {/* Open Graph Meta Tags (Facebook, WhatsApp, LinkedIn) */}

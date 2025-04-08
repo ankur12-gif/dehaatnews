@@ -36,7 +36,7 @@ const App = () => {
       <Analytics />
       <Routes>
         {/* Public Pages */}
-        <Route path="/" element={<Layout title="Local News - Dehaat News"><Local /></Layout>} />
+        <Route path="/" element={<Layout title="Dehaat News"><Local /></Layout>} />
         <Route path="/home" element={<Layout title="Home - Dehaat News"><Home /></Layout>} />
         <Route path="/signin" element={<Layout title="Sign In - Dehaat News"><Signin /></Layout>} />
         <Route path="/local" element={<Layout title="Local News - Dehaat News"><Local /></Layout>} />
