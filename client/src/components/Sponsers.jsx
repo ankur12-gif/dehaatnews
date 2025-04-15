@@ -22,7 +22,7 @@ const Sponsers = () => {
     useEffect(() => {
         const interval = setTimeout(() => {
             nextSlide();
-        }, 2000);
+        }, 3000);
         return () => clearTimeout(interval); // Cleanup timeout on component unmount
     }, [currentIndex, slides]);
 
