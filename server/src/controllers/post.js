@@ -29,13 +29,19 @@ const createPost = TryCatch(async (req, res) => {
 });
 
 const getAllPosts = TryCatch(async (req, res, next) => {
-    const cachedPosts = myCache.get("allPosts");
-    if (cachedPosts) {
-        return res.status(200).json({ success: true, posts: cachedPosts });
+    const { category, page = 1, limit = 5 } = req.body
+    const filter = {}
+
+    if (category && category != "general") {
+        filter.category = category;
+
     }
 
-    const posts = await Posts.find({}).sort({ createdAt: -1 });
-    myCache.set("allPosts", posts, TTL);
+    const posts = await Posts.find(filter)
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(Number(limit));
+
     return res.status(200).json({ success: true, posts });
 });
 
