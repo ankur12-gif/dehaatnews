@@ -28,6 +28,15 @@ const createPost = TryCatch(async (req, res) => {
     return res.status(201).json({ success: true, message: "Post created successfully" });
 });
 
+const getAll = TryCatch(async (req, res, next) => {
+    const posts = await Posts.find().sort({ createdAt: -1 });
+
+    return res.status(200).json({
+        success: true,
+        posts,
+    });
+});
+
 const getAllPosts = TryCatch(async (req, res, next) => {
     const { category, page = 1, limit = 4 } = req.body
 
@@ -198,4 +207,5 @@ export {
     deletePost,
     updatePost,
     downloadPost,
+    getAll
 };

@@ -8,6 +8,7 @@ import {
     getSinglePost,
     updatePost,
     downloadPost,
+    getAll
 } from "../controllers/post.js";
 import { multiUpload } from "../middleware/multer.js";
 
@@ -15,6 +16,7 @@ const app = express.Router();
 
 app.post("/createpost", adminOnly, multiUpload, createPost);
 app.post("/getAllPosts", getAllPosts);
+app.get("/getAll", getAll);
 app.delete("/deleteImage", deleteImage);
 app.get("/download", downloadPost);
 app.get("/:postId", getSinglePost);

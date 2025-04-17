@@ -18,7 +18,10 @@ export const postApi = createApi({
             }),
             invalidatesTags: ["posts"],
         }),
-
+        getAllPostsForAdmin: builder.query({
+            query: () => `getAll`,
+            providesTags: ["posts"],
+        }),
         getAllPosts: builder.query({
             query: ({ page = 1, limit = 4, category = "general" } = {}) => ({
                 url: "/getAllPosts",
@@ -67,4 +70,5 @@ export const {
     useDeleteImageMutation,
     useDeletePostMutation,
     useUpdatePostMutation,
+    useGetAllPostsForAdminQuery
 } = postApi;

@@ -4,14 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { Pencil, Trash2 } from "lucide-react";
 import { IoIosAddCircle as Addition } from "react-icons/io";
-import { useGetAllPostsQuery, useDeletePostMutation } from "../redux/api/postApi";
+import { useDeletePostMutation, useGetAllPostsForAdminQuery } from "../redux/api/postApi";
 import Loader from "../components/Loader.jsx";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Admin = () => {
-    const { data, isLoading, isError } = useGetAllPostsQuery();
+    const { data, isLoading, isError } = useGetAllPostsForAdminQuery();
     const [deletePost] = useDeletePostMutation();
     const [rows, setRows] = useState([]);
     const navigate = useNavigate();
