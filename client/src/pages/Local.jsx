@@ -5,62 +5,105 @@ import Loader from "../components/Loader";
 import { motion } from "framer-motion";
 import Sponsers from "../components/Sponsers.jsx";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 const Local = () => {
-    const { data, isLoading } = useGetAllPostsQuery();
     const { category } = useSelector((state) => state.category);
 
-    const [filteredPosts, setFilteredPosts] = useState([]);
+    const [posts, setPosts] = useState([]);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [initialLoaded, setInitialLoaded] = useState(false);
+
+    const { data, isFetching } = useGetAllPostsQuery({
+        page,
+        limit: 10,
+        category,
+    });
+
+    const observer = useRef();
+
+    const lastPostRef = useCallback(
+        (node) => {
+            if (isFetching || !hasMore) return;
+
+            if (observer.current) observer.current.disconnect();
+
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    setPage((prev) => prev + 1);
+                }
+            }, { rootMargin: "100px" });
+
+            if (node) observer.current.observe(node);
+        },
+        [isFetching, hasMore]
+    );
 
     useEffect(() => {
-        if (data?.posts) {
-            const newFilteredPosts =
-                category !== "general"
-                    ? data.posts.filter((post) => post.category === category)
-                    : data.posts;
-
-            setFilteredPosts(newFilteredPosts);
+        if (data?.posts?.length) {
+            if (page === 1) {
+                setPosts(data.posts);
+            } else {
+                setPosts((prev) => [...prev, ...data.posts]);
+            }
+            setHasMore(data.hasMore); // Important: Only set false when there's no more
         }
-    }, [category, data]); // Removed `filteredPosts` from dependencies to prevent infinite loop
 
-    if (isLoading) return <Loader />;
+        if (page === 1 && data) {
+            setInitialLoaded(true);
+        }
+    }, [data]);
+
+    useEffect(() => {
+        setPage(1);
+        setPosts([]);
+        setHasMore(true);
+        setInitialLoaded(false);
+    }, [category]);
+
+    if (!initialLoaded && isFetching) return <Loader />;
 
     return (
         <motion.div layoutId="underline" className="bg-gray-600 min-h-screen pb-16">
-            {/* Sponsers Component */}
             <div className="pt-4 sm:m-4">
                 <Sponsers />
             </div>
 
-            {/* Check if posts exist */}
-            {filteredPosts.length > 0 ? ( // FIXED: `filteredPosts` is an array, not an object
+            {posts.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 mt-4">
-                    {filteredPosts.map((i) => (
-                        <div
-                            key={i._id}
-                            className="bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-                        >
-                            <Newscard
-                                title={i.title}
-                                postId={i._id}
-                                link={`/viewfull/${i._id}`}
-                                description={
-                                    i.description
-                                        ? i.description.slice(0, 88)
-                                        : "No description available"
-                                }
-                                pubDate={i.createdAt}
-                                sourceId={"DehatiNews"}
-                                creator={i.creator ? i.creator : "Ajay Sharma"}
-                                imageUrl={i.photos?.[0]?.url} // Added optional chaining for safety
-                            />
-                        </div>
-                    ))}
+                    {posts.map((post, idx) => {
+                        const isLast = idx === posts.length - 1;
+                        console.log(posts)
+                        return (
+                            <div
+                                key={post._id}
+                                ref={isLast ? lastPostRef : null}
+                                className="bg-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                            >
+                                <Newscard
+                                    title={post.title}
+                                    postId={post._id}
+                                    link={`/viewfull/${post._id}`}
+                                    description={
+                                        post.description
+                                            ? post.description.slice(0, 88)
+                                            : "No description available"
+                                    }
+                                    pubDate={post.createdAt}
+                                    sourceId={"DehatiNews"}
+                                    creator={post.creator || "Ajay Sharma"}
+                                    imageUrl={post.photos?.[0]?.url}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             ) : (
                 <div className="text-white text-center text-xl mt-10">No Posts Available</div>
             )}
+
+            {isFetching && page > 1 && <Loader />}
         </motion.div>
     );
 };

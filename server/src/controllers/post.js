@@ -29,9 +29,8 @@ const createPost = TryCatch(async (req, res) => {
 });
 
 const getAllPosts = TryCatch(async (req, res, next) => {
-    const { category, page = 1, limit = 5 } = req.body
+    const { category, page = 1, limit = 4 } = req.body
     const filter = {}
-
     if (category && category != "general") {
         filter.category = category;
 
@@ -42,7 +41,14 @@ const getAllPosts = TryCatch(async (req, res, next) => {
         .skip((page - 1) * limit)
         .limit(Number(limit));
 
-    return res.status(200).json({ success: true, posts });
+    const total = await Posts.countDocuments(filter);
+
+    return res.status(200).json({
+        success: true,
+        posts,
+        total,
+        hasMore: (page * limit) < total,
+    });
 });
 
 const getSinglePost = TryCatch(async (req, res, next) => {
