@@ -16,7 +16,6 @@ const Local = () => {
     const observerRef = useRef(null);
     const loadingRef = useRef(false);
 
-    console.log(posts)
 
     const [activeCategory, setActiveCategory] = useState("general");
 
