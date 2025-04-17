@@ -13,13 +13,14 @@ const Local = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [initialLoaded, setInitialLoaded] = useState(false);
-    const observer = useRef(null);
-    const containerRef = useRef(null);
+    const observerRef = useRef(null);
     const loadingRef = useRef(false);
+
+    console.log(posts)
 
     const [activeCategory, setActiveCategory] = useState("general");
 
-    // Reset when category changes
+    // Reset on category change
     useEffect(() => {
         if (category) {
             setActiveCategory(category);
@@ -28,9 +29,9 @@ const Local = () => {
             setHasMore(true);
             setInitialLoaded(false);
             loadingRef.current = false;
-            if (observer.current) {
-                observer.current.disconnect();
-                observer.current = null;
+            if (observerRef.current) {
+                observerRef.current.disconnect();
+                observerRef.current = null;
             }
         }
     }, [category]);
@@ -44,7 +45,7 @@ const Local = () => {
         }
     );
 
-    // Append and deduplicate posts
+    // Handle data load
     useEffect(() => {
         if (!data) return;
 
@@ -65,35 +66,36 @@ const Local = () => {
         setInitialLoaded(true);
     }, [data, page]);
 
-    // Infinite scroll handler
+    // Infinite Scroll Handler
     useEffect(() => {
         if (!initialLoaded || !hasMore || isFetching) return;
 
-        const options = {
-            root: containerRef.current,
-            rootMargin: "300px",
-            threshold: 0.1,
+        const observerOptions = {
+            root: null,
+            rootMargin: "100px",
+            threshold: 1.0,
         };
 
-        const callback = (entries) => {
-            if (entries[0].isIntersecting && !loadingRef.current) {
+        const observerCallback = (entries) => {
+            const [entry] = entries;
+            if (entry.isIntersecting && !loadingRef.current) {
                 loadingRef.current = true;
                 setPage((prev) => prev + 1);
             }
         };
 
-        observer.current = new IntersectionObserver(callback, options);
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        observerRef.current = observer;
 
         const postItems = document.querySelectorAll(".post-item");
-        if (postItems.length > 0) {
-            observer.current.observe(postItems[postItems.length - 1]);
-        }
+        const lastItem = postItems[postItems.length - 1];
 
-        return () => {
-            if (observer.current) observer.current.disconnect();
-        };
-    }, [posts, initialLoaded, hasMore, isFetching]);
+        if (lastItem) observer.observe(lastItem);
 
+        return () => observer.disconnect();
+    }, [posts, hasMore, isFetching, initialLoaded]);
+
+    // Render
     if (error) {
         return (
             <div className="bg-gray-600 min-h-screen flex items-center justify-center">
@@ -122,7 +124,7 @@ const Local = () => {
                 <Sponsers />
             </div>
 
-            <div ref={containerRef} className="posts-container">
+            <div className="posts-container">
                 {posts.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 mt-4">
                         {posts.map((post, idx) => (
