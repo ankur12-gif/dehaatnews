@@ -30,6 +30,7 @@ const createPost = TryCatch(async (req, res) => {
 
 const getAllPosts = TryCatch(async (req, res, next) => {
     const { category, page = 1, limit = 4 } = req.body
+
     const filter = {}
     if (category && category != "general") {
         filter.category = category;
