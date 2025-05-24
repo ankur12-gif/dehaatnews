@@ -15,7 +15,7 @@ const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
 
 
     // Function to generate social media share URLs
-    const shareOnWhatsApp = `https://wa.me/?text=${encodeURIComponent(title + " " + Image+url)}`;
+    const shareOnWhatsApp = `https://wa.me/?text=${encodeURIComponent(title + " " + url)}`;
     const shareOnFacebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
     const shareOnTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
 
