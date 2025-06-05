@@ -9,6 +9,10 @@ import ImageKit from "imagekit";
 import morgan from "morgan";
 import NodeCache from "node-cache";
 import axios from "axios";
+// const path = require("path");
+// const fs = require("fs");
+import fs from "fs";
+import path from "path";
 
 dotenv.config({ path: "./.env" });
 
@@ -27,12 +31,13 @@ console.log("CLIENT_URL:", process.env.CLIENT_URL);
 
 // Setup CORS
 const corsOptions = {
-    origin: [
-        "http://localhost:5173",
-        "http://localhost:4173",
-        process.env.CLIENT_URL,
-    ],
-    credentials: true,
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:4173",
+    process.env.CLIENT_URL,
+    process.env.SERVER_URL,
+  ],
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -41,104 +46,99 @@ app.use(express.json());
 
 // Basic Route
 app.get("/", (req, res) => {
-    res.send("Hello World");
+  res.send("Hello World");
 });
 
 // Initialize ImageKit
 export const imagekit = new ImageKit({
-    publicKey: process.env.PUBLIC_KEY,
-    privateKey: process.env.PRIVATE_KEY,
-    urlEndpoint: process.env.URL_ENDPOINT,
+  publicKey: process.env.PUBLIC_KEY,
+  privateKey: process.env.PRIVATE_KEY,
+  urlEndpoint: process.env.URL_ENDPOINT,
 });
 
-// 🔹 Open Graph Meta Route for Social Sharing
 app.get("/viewfull/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
+  try {
+    const { id } = req?.params; // ✅ This line is missing in your code
 
-        const apiResponse = await axios.get(`${process.env.CLIENT_URL}/api/v1/posts/${id}`);
+    // ✅ Use your backend API, not CLIENT_URL
+    const apiResponse = await axios.get(
+      `${process.env.SERVER_URL}/api/v1/posts/${id}`
+    );
 
-        if (!apiResponse.data.success) {
-            return res.status(404).send("Article not found");
-        }
+    console.log({ apiResponse });
 
-        const post = apiResponse.data.post;
-
-        // Fallbacks + escape to avoid HTML breakage
-        const title = escapeHTML(post.title || "Untitled Post");
-        const description = escapeHTML(post.description || "Read this article on Dehaat News.");
-        const imageUrl =
-            post.imageUrl ||
-            post.photos?.[0]?.url ||
-            "https://dehaatnews.com/dehaatnews.png"; // your fallback image
-
-        const ogMetaTags = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${title} - Dehaat News</title>
-
-            <!-- Open Graph Tags -->
-            <meta property="og:title" content="${title}" />
-            <meta property="og:description" content="${description}" />
-            <meta property="og:image" content="${imageUrl}" />
-            <meta property="og:image:secure_url" content="${imageUrl}" />
-            <meta property="og:image:width" content="1200" />
-            <meta property="og:image:height" content="630" />
-            <meta property="og:type" content="article" />
-            <meta property="og:url" content="https://dehaatnews.com/viewfull/${id}" />
-
-            <!-- Twitter -->
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content="${title}" />
-            <meta name="twitter:description" content="${description}" />
-            <meta name="twitter:image" content="${imageUrl}" />
-
-            <!-- Redirect to frontend after preview -->
-            <script>
-                window.location.href = "https://dehaatnews.com/news/${id}";
-            </script>
-        </head>
-        <body></body>
-        </html>
-        `;
-
-        res.send(ogMetaTags);
-    } catch (error) {
-        console.error("Error in /viewfull/:id:", error.message);
-        res.status(500).send("Server Error");
+    if (!apiResponse.data.success) {
+      return res.status(404).send("Post not found");
     }
+
+    const post = apiResponse?.data?.post;
+    const title = escapeHTML(post?.title || "Untitled Post");
+    const description = escapeHTML(
+      post?.description || "Read this article on Dehaat News."
+    );
+    const rawImageUrl =
+      post.imageUrl ||
+      post.photos?.[0]?.url ||
+      `${process.env.CLIENT_URL}/dehaatnews.png`;
+    const imageUrl = escapeHTML(rawImageUrl);
+    const pageUrl = `${process.env.CLIENT_URL}/viewfull/${id}`;
+
+    const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>${title}</title>
+        <meta name="description" content="${description}" />
+        <meta property="og:image" content="${imageUrl}" />
+        <!-- other meta tags -->
+      </head>
+      <body>
+        <div id="root"></div>
+        <script>
+          window.__PRELOADED_STATE__ = ${JSON.stringify(post)};
+        </script>
+        <script src="/static/js/main.js"></script>
+           <script>
+                window.location.href = "${pageUrl}";
+            </script>
+      </body>
+    </html>
+  `;
+
+    res.send(html);
+  } catch (error) {
+    console.error("Error in /viewfull/:id:", error.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 // Escape HTML for safe meta output
 function escapeHTML(str) {
-    return str
-        ?.replace(/&/g, "&amp;")
-        ?.replace(/</g, "&lt;")
-        ?.replace(/>/g, "&gt;")
-        ?.replace(/"/g, "&quot;")
-        ?.replace(/'/g, "&#039;");
+  return str
+    ?.replace(/&/g, "&amp;")
+    ?.replace(/</g, "&lt;")
+    ?.replace(/>/g, "&gt;")
+    ?.replace(/"/g, "&quot;")
+    ?.replace(/'/g, "&#039;");
 }
 
 // Initialize MongoDB and Start Server
 const initializeServer = async () => {
-    try {
-        AdminPassKey = await hashPassword(process.env.ADMIN_PASS_KEY);
+  try {
+    AdminPassKey = await hashPassword(process.env.ADMIN_PASS_KEY);
 
-        await connectToMongoDB(mongoUri);
+    await connectToMongoDB(mongoUri);
 
-        app.use("/api/v1/user", userRoute);
-        app.use("/api/v1/posts", postsRoute);
-        app.use("/api/v1/sponsors", sponsorsRoute);
+    app.use("/api/v1/user", userRoute);
+    app.use("/api/v1/posts", postsRoute);
+    app.use("/api/v1/sponsors", sponsorsRoute);
 
-        app.listen(PORT, () => {
-            console.log(`🚀 App is listening on port ${PORT}`);
-        });
-    } catch (error) {
-        console.error("Error initializing server:", error);
-    }
+    app.listen(PORT, () => {
+      console.log(`🚀 App is listening on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Error initializing server:", error);
+  }
 };
 
 initializeServer();
