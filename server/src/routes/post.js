@@ -15,7 +15,7 @@ import { multiUpload } from "../middleware/multer.js";
 const app = express.Router();
 
 app.post("/createpost", adminOnly, multiUpload, createPost);
-app.get("/getAllPosts", getAllPosts);
+app.post("/getAllPosts", getAllPosts);
 app.get("/getAll", getAll);
 app.delete("/deleteImage", deleteImage);
 app.get("/download", downloadPost);
