@@ -5,7 +5,7 @@ import { FaRegCopy } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
-    const url = `${window.location.origin}${link}`;
+    const url = `${import.meta.env.VITE_SERVER}${link}`;
 
     const handleCopyLink = () => {
         navigator.clipboard.writeText(url).then(() => {
