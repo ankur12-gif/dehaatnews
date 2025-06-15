@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Newscard = ({ title, link, description, pubDate, imageUrl }) => {
     const url = `${import.meta.env.VITE_SERVER}${link}`;
-
+    console.log(link)
     const handleCopyLink = () => {
         navigator.clipboard.writeText(url).then(() => {
             alert("Link copied to clipboard!");
