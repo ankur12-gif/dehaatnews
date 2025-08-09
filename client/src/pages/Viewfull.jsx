@@ -30,6 +30,7 @@ const Viewfull = () => {
     const firstImage = photos[0]?.url;
     const secondImage = photos[1]?.url; // Second image if available
 
+
     return (
         <div className="bg-gray-600 pt-20 min-h-screen flex justify-center p-4">
             <div className="bg-white h-auto w-full sm:w-3/4 md:w-1/2 rounded-lg m-2">

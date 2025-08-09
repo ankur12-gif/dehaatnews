@@ -160,7 +160,7 @@ const Update = () => {
                         ></textarea>
                     </div>
                     <div>
-                        <label htmlFor="photos" className="mb-2 text-base block">
+                        <label htmlFor="photos" className="mb-2 text-base block cursor-pointer">
                             Photos
                         </label>
                         <input
