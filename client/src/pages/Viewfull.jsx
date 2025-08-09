@@ -29,7 +29,7 @@ const Viewfull = () => {
     const photos = data?.post?.photos || [];
     const firstImage = photos[0]?.url;
     const secondImage = photos[1]?.url; // Second image if available
-
+    const thirdImage = photos[2]?.url
 
     return (
         <div className="bg-gray-600 pt-20 min-h-screen flex justify-center p-4">
@@ -69,18 +69,29 @@ const Viewfull = () => {
                     {paragraphs.map((paragraph, index) => (
                         <div key={index}>
                             <p className="mb-4 text-lgl">{paragraph}</p>
-                            {/* Insert second image after the third paragraph if available */}
-                            {index === 4 && secondImage && (
-                                <div className="flex justify-center my-6">
-                                    <img
-                                        src={secondImage}
-                                        alt="Second Post Image"
-                                        className="w-full max-h-96 object-contain rounded-lg shadow-lg"
-                                    />
+
+                            {/* Insert second & third image after the 5th paragraph if available */}
+                            {index === 4 && (secondImage || thirdImage) && (
+                                <div className="flex flex-col items-center my-6">
+                                    {secondImage && (
+                                        <img
+                                            src={secondImage}
+                                            alt="Second Post Image"
+                                            className="w-full max-h-96 object-contain rounded-lg shadow-lg mb-4"
+                                        />
+                                    )}
+                                    {thirdImage && (
+                                        <img
+                                            src={thirdImage}
+                                            alt="Third Post Image"
+                                            className="w-full max-h-96 object-contain rounded-lg shadow-lg"
+                                        />
+                                    )}
                                 </div>
                             )}
                         </div>
                     ))}
+
                 </div>
             </div>
         </div>
