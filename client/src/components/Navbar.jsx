@@ -52,6 +52,8 @@ const Navbar = () => {
         navigate("/local")
     }
 
+
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -112,6 +114,7 @@ const Navbar = () => {
                         </li>
                         <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" onClick={handleWorldClick}>World</li>
                         <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700" ><a href="/download">ePage</a></li>
+                        <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700"><Link to="/advertisement">Advertisement</Link></li>
                         <li className="cursor-pointer px-5 py-3 md:px-0 md:py-0 hover:bg-gray-700"><Link to="/contactus">About Us</Link></li>
                     </ul>
                 </div>

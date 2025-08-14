@@ -16,6 +16,7 @@ const Contactus = lazy(() => import("./pages/Contactus.jsx"));
 const SponsorsTable = lazy(() => import("./pages/SponsorsTable.jsx"));
 const Createsponsor = lazy(() => import("./pages/Createsponsors.jsx"));
 const Worldnews = lazy(() => import("./pages/Worldnews.jsx"));
+const Advertisement = lazy(() => import("./pages/Advertisement.jsx"));
 
 ReactGA.initialize(import.meta.env.VITE_GOOGLEID);
 
@@ -44,6 +45,7 @@ const App = () => {
         <Route path="/download" element={<Layout title="Download - Dehaat News"><Download /></Layout>} />
         <Route path="/viewfull/:id" element={<Layout title="View Full News - Dehaat News"><Viewfull /></Layout>} />
         <Route path="/worldNews" element={<Layout title="World News - Dehaat News"><Worldnews /></Layout>} />
+        <Route path="/advertisement" element={<Layout title="World News - Dehaat News"><Advertisement /></Layout>} />
 
         {/* Protected Routes (Only for Admins) */}
         <Route path="" element={<Protectedroute />}>

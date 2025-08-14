@@ -23,6 +23,14 @@ export const sponsorApi = createApi({
             query: () => `getSponsors`,
             providesTags: ["sponsors"],
         }),
+        getLimitedSponsors: builder.query({
+            query: ({ page = 1, limit = 4, category = "general" } = {}) => ({
+                url: "/getLimitedSponsors",
+                method: "POST",
+                body: { page, limit, category },
+            }),
+            providesTags: ["posts"]
+        }),
 
         deleteSponsor: builder.mutation({
             query: (sponsorId) => ({
@@ -38,4 +46,5 @@ export const {
     useCreateSponsorsMutation,
     useDeleteSponsorMutation,
     useGetAllSponsorsQuery,
+    useGetLimitedSponsorsQuery
 } = sponsorApi;

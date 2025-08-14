@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import { useState, useEffect } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
-import { useGetAllSponsorsQuery } from "../redux/api/sponsorsApi";
+import { useGetLimitedSponsorsQuery } from "../redux/api/sponsorsApi";
 
 const Sponsers = () => {
-    const { data } = useGetAllSponsorsQuery();
+    const [page, setPage] = useState(1);
+    const { data } = useGetLimitedSponsorsQuery({ page, limit: 15 });
     const [slides, setSlides] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
