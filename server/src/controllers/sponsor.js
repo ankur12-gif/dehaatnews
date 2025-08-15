@@ -50,7 +50,7 @@ const getLimitedSponsors = TryCatch(async (req, res, next) => {
     const { page = 1, limit = 5 } = req.body; // ✅ Read page & limit from body
 
     const sponsors = await Sponsors.find({})
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: 1 })
         .skip((page - 1) * limit)
         .limit(Number(limit));
 
