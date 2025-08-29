@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectToMongoDB, hashPassword } from "./src/utils/features.js";
 import userRoute from "./src/routes/admin.js";
 import postsRoute from "./src/routes/post.js";
+import analyticsRoute from "./src/routes/analytics.js";
 import sponsorsRoute from "./src/routes/sponsor.js";
 import ImageKit from "imagekit";
 import morgan from "morgan";
@@ -26,6 +27,7 @@ export const TTL = process.env.TIME_TO_LIVE;
 export const envMode = process.env.NODE_ENV || "PRODUCTION";
 const mongoUri = process.env.MONGO_URI;
 export const myCache = new NodeCache();
+export const GA4_PROPERTYID = process.env.GA4_PROPERTYID
 
 
 
@@ -132,6 +134,7 @@ const initializeServer = async () => {
     app.use("/api/v1/user", userRoute);
     app.use("/api/v1/posts", postsRoute);
     app.use("/api/v1/sponsors", sponsorsRoute);
+    app.use("/api/v1/analytics", analyticsRoute)
 
     app.listen(PORT, () => {
       console.log(`🚀 App is listening on port ${PORT}`);
