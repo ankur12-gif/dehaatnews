@@ -1,10 +1,14 @@
 import data from "../assets/NewsData.io_Sample_data.json";
 import Newscard from "../components/Newscard";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
 const Home = () => {
     return (
-        <motion.div layoutId="underline" className="bg-gray-600 min-h-screen pb-16 mt-16" transition={{ duration: 3 }}>
+        <motion.div
+            layoutId="underline"
+            className="bg-gray-600 min-h-screen pb-16 mt-16"
+            transition={{ duration: 3 }}
+        >
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {data.map((i) => (
                     <div

@@ -126,7 +126,9 @@ const CreatePost = () => {
                         </select>
                     </div>
                     <div>
-                        <label className="mb-2 text-base block cursor-pointer">Photos</label>
+                        <label className="mb-2 text-base block cursor-pointer">
+                            Photos
+                        </label>
                         <input
                             type="file"
                             accept="image/*"

@@ -18,7 +18,12 @@ export const GetAnalyticsData = async (req, res) => {
             property: `properties/${GA4_PROPERTYID}`, // replace with your GA4 property id
             requestBody: {
                 dimensions: [{ name: "date" }],
-                metrics: [{ name: "activeUsers" }],
+                metrics: [{ name: "activeUsers" },
+                { name: "newUsers" },
+                { name: "sessions" },
+                { name: "screenPageViews" },
+                { name: "bounceRate" },
+                { name: "averageSessionDuration" },],
                 dateRanges: [{ startDate: "7daysAgo", endDate: "today" }],
             },
         });

@@ -60,9 +60,9 @@ export const imagekit = new ImageKit({
 
 app.get("/viewfull/:id", async (req, res) => {
   try {
-    const { id } = req?.params; // ✅ This line is missing in your code
+    const { id } = req?.params;
 
-    // ✅ Use your backend API, not CLIENT_URL
+
     const apiResponse = await axios.get(
       `${process.env.SERVER_URL}/api/v1/posts/${id}`
     );
@@ -129,7 +129,7 @@ const initializeServer = async () => {
   try {
     AdminPassKey = await hashPassword(process.env.ADMIN_PASS_KEY);
 
-    await connectToMongoDB(mongoUri);
+    connectToMongoDB(mongoUri);
 
     app.use("/api/v1/user", userRoute);
     app.use("/api/v1/posts", postsRoute);

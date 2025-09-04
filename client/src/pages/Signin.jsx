@@ -30,7 +30,7 @@ const Signin = () => {
         e.preventDefault();
 
         const { data, isError } = await userSignin(formData)
-        console.log(data)
+
         if (isError) {
             toast.error("Login Failed")
         }

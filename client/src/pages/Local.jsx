@@ -16,7 +16,6 @@ const Local = () => {
     const observerRef = useRef(null);
     const loadingRef = useRef(false);
 
-
     const [activeCategory, setActiveCategory] = useState("general");
 
     // Reset on category change
@@ -83,7 +82,10 @@ const Local = () => {
             }
         };
 
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        const observer = new IntersectionObserver(
+            observerCallback,
+            observerOptions
+        );
         observerRef.current = observer;
 
         const postItems = document.querySelectorAll(".post-item");
@@ -98,7 +100,9 @@ const Local = () => {
     if (error) {
         return (
             <div className="bg-gray-600 min-h-screen flex items-center justify-center">
-                <div className="text-white text-xl">Error loading posts. Please try again.</div>
+                <div className="text-white text-xl">
+                    Error loading posts. Please try again.
+                </div>
             </div>
         );
     }
