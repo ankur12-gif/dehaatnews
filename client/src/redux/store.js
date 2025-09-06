@@ -5,6 +5,7 @@ import { userReducer } from "./reducer/userReducer.js"
 import { newsApi } from "./api/newsApi.js";
 import { postReducer } from "./reducer/postReducer.js";
 import { sponsorApi } from "./api/sponsorsApi.js";
+import { analyticsApi } from "./api/analyticsApi.js";
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
         [postApi.reducerPath]: postApi.reducer,
         [newsApi.reducerPath]: newsApi.reducer,
         [sponsorApi.reducerPath]: sponsorApi.reducer,
+        [analyticsApi.reducerPath]: analyticsApi.reducer,
         user: userReducer.reducer,
         category: postReducer.reducer
     },
@@ -22,4 +24,5 @@ export const store = configureStore({
             .concat(postApi.middleware)
             .concat(newsApi.middleware)
             .concat(sponsorApi.middleware)
+            .concat(analyticsApi.middleware)
 });

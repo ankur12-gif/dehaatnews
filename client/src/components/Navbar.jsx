@@ -50,6 +50,10 @@ const Navbar = () => {
         navigate("/local");
     };
 
+    const handleAnalyticsClick = () => {
+        navigate("/analytics");
+    };
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (avatarRef.current && !avatarRef.current.contains(event.target)) {
@@ -211,6 +215,12 @@ const Navbar = () => {
                         </div>
                         {avatarDropdownOpen && (
                             <ul className="absolute right-0 mt-2 w-40 bg-black text-white rounded-lg shadow-lg z-50">
+                                <li
+                                    onClick={handleAnalyticsClick}
+                                    className="cursor-pointer px-3 py-2 hover:bg-gray-200 font-bold"
+                                >
+                                    Analytics
+                                </li>
                                 <li
                                     onClick={handleAvatarClick}
                                     className="cursor-pointer px-3 py-2 hover:bg-gray-200 font-bold"

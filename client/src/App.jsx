@@ -22,6 +22,7 @@ const SponsorsTable = lazy(() => import("./pages/SponsorsTable.jsx"));
 const Createsponsor = lazy(() => import("./pages/Createsponsors.jsx"));
 const Worldnews = lazy(() => import("./pages/Worldnews.jsx"));
 const Advertisement = lazy(() => import("./pages/Advertisement.jsx"));
+const Analyticspage = lazy(() => import("./pages/Analytics.jsx"))
 
 ReactGA.initialize(import.meta.env.VITE_GOOGLEID);
 
@@ -121,6 +122,14 @@ const App = () => {
             element={
               <Layout title="Admin Panel - Dehaat News">
                 <Admin />
+              </Layout>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <Layout title="Analytics Data - Dehaat News">
+                <Analyticspage />
               </Layout>
             }
           />
