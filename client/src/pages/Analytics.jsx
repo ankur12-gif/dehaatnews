@@ -1,4 +1,5 @@
 import AnalyticsLineChart from "../components/Linechart.jsx";
+import AnalyticsBarchart from "../components/Barchart.jsx"
 import { useGetAllAnalyticsDataQuery } from "../redux/api/analyticsApi";
 
 const Analytics = () => {
@@ -16,6 +17,7 @@ const Analytics = () => {
                 </h2>
                 <div className="w-full h-96">
                     <AnalyticsLineChart data={data} />
+                    <AnalyticsBarchart data={data} />
                 </div>
             </div>
         </div>
