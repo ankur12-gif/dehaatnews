@@ -1,9 +1,4 @@
-/* AnalyticsBarChart.jsx
-   A well-documented, production-ready React component that renders a bar chart
-   using react-chartjs-2 + chart.js. It sorts dates, formats labels, handles
-   empty data, supports stacked/horizontal modes, and uses useMemo to avoid
-   unnecessary re-renders.
-*/
+
 
 import { useMemo } from "react";
 import PropTypes from "prop-types";
@@ -28,7 +23,7 @@ ChartJS.register(
 );
 
 const AnalyticsBarChart = ({ data, stacked = false, horizontal = false }) => {
-    // Guard: when there's no data, render a small friendly placeholder
+
     if (!Array.isArray(data) || data.length === 0) {
         return (
             <div className="p-4 text-center" role="status">
@@ -37,12 +32,12 @@ const AnalyticsBarChart = ({ data, stacked = false, horizontal = false }) => {
         );
     }
 
-    // Keep a sorted copy of the data (ascending by date) so charts are always ordered
+
     const sorted = useMemo(() => {
         return [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
     }, [data]);
 
-    // Friendly, compact labels (e.g. "Sep 1") — falls back to raw value if parsing fails
+
     const labels = useMemo(
         () =>
             sorted.map((item) => {
@@ -58,7 +53,7 @@ const AnalyticsBarChart = ({ data, stacked = false, horizontal = false }) => {
         [sorted]
     );
 
-    // Chart data object (memoized)
+
     const chartData = useMemo(
         () => ({
             labels,
@@ -82,19 +77,19 @@ const AnalyticsBarChart = ({ data, stacked = false, horizontal = false }) => {
         [labels, sorted]
     );
 
-    // Options (memoized). `indexAxis` controls horizontal vs vertical bars.
+
     const options = useMemo(
         () => ({
             indexAxis: horizontal ? "y" : "x",
             responsive: true,
-            maintainAspectRatio: false, // easier to control height via parent container
+            maintainAspectRatio: false,
             plugins: {
                 legend: { position: "top" },
                 title: { display: true, text: "Analytics: Active Users and New Users" },
                 tooltip: {
                     callbacks: {
                         label: (ctx) => {
-                            const value = ctx.parsed.y ?? ctx.parsed ?? 0; // support horizontal/vertical
+                            const value = ctx.parsed.y ?? ctx.parsed ?? 0;
                             return `${ctx.dataset.label}: ${value.toLocaleString()}`;
                         },
                     },
@@ -108,7 +103,7 @@ const AnalyticsBarChart = ({ data, stacked = false, horizontal = false }) => {
         [stacked, horizontal]
     );
 
-    // Wrap chart in a div with a controlled height so maintainAspectRatio:false works
+
     return (
 
         <Bar data={chartData} options={options} />
