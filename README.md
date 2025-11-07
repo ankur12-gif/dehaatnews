@@ -1,19 +1,83 @@
-# DehaatNews — Full-Stack Freelance Project
+# 📰 DehaatNews — Full-Stack Freelance Project
 
-I independently developed and now maintain DehaatNews, a full-stack news application built with React, Node.js, and MongoDB.  
-It serves **2,000+ daily users**, hosts **3,000+ articles**, and is fully monetized through **sponsors and Facebook Ads**, with Google Ads integration in progress.
+**DehaatNews** is a full-stack news application I independently designed, developed, and deployed as a freelance project.  
+It has since evolved into a **fully monetized platform** serving thousands of users daily.
 
-### 🧩 Tech Stack
-- **Frontend:** React, TypeScript, Tailwind CSS, Redux Toolkit
-- **Backend:** Node.js, Express, MongoDB
-- **Deployment:** VPS + ImageKit
-- **Integrations:** Facebook Ads, Google Analytics
+---
 
-### 🚀 Key Features
-- Dynamic category-based news feed
-- SEO-optimized pages with Open Graph tags
-- Admin dashboard with analytics
-- Image CDN optimization
-- Infinite scrolling with caching
+## 🚀 Overview
 
-👉 **Live:** [https://dehaatnews.com](https://dehaatnews.com)
+- 🧑‍💻 **Role:** Full-Stack Developer & Ongoing Maintainer  
+- 🌐 **Live Site:** [https://dehaatnews.com](https://dehaatnews.com)  
+- 💰 **Revenue Streams:** Facebook Ads, Individual Sponsors (Google Ads integration in progress)  
+- 👥 **Users:** 2,000+ regular readers  
+- 📰 **Content:** 3,000+ published articles  
+- 📈 **Page Views:** 8,000+ daily  
+
+This project demonstrates my ability to build, scale, and maintain production-grade applications — from architecture and backend design to UI/UX, SEO optimization, and analytics integration.
+
+---
+
+## ⚙️ Tech Stack
+
+### Frontend
+- React.js + TypeScript  
+- Tailwind CSS for modern, responsive UI  
+- Redux Toolkit Query for data fetching & caching  
+- React Router for navigation  
+- React Helmet for SEO metadata & Open Graph tags  
+
+### Backend
+- Node.js + Express.js  
+- MongoDB with Mongoose  
+- JWT-based authentication  
+- Multer for file uploads  
+- Cloudinary → ImageKit migration for CDN image optimization  
+
+### Deployment & Analytics
+- Render (frontend + backend hosting)  
+- Cloudflare (DNS, CDN, caching, SSL)  
+- Google Analytics for performance tracking  
+- Facebook Ads + Sponsor integrations  
+
+---
+
+## 🌟 Key Features
+
+- 📰 Dynamic category-based news feed  
+- 🔍 Smart full-text search  
+- ♾️ Infinite scrolling with caching  
+- 🧭 Admin dashboard for articles, analytics & users  
+- 🖼️ Optimized images via ImageKit  
+- ⚡ Fast load times & SEO-friendly structure  
+
+---
+
+## 🧱 Architecture Overview
+
+```mermaid
+graph TD
+A[React + TypeScript Frontend] -->|RTK Query API Calls| B[Express Backend]
+B --> C[(MongoDB Database)]
+B --> D[ImageKit CDN]
+B --> E[Authentication + JWT]
+B --> F[Analytics + Ads Integration]
+
+🧠 Key Learnings
+How to architect and maintain a real production system
+
+Integrating monetization, analytics, and SEO into full-stack apps
+
+Deploying and scaling on cloud-based infrastructure
+
+End-to-end responsibility: product decisions → code → growth
+
+🧭 Future Roadmap
+ Add Google Ads monetization
+
+Build a subscription model
+
+ AI-powered article recommendations
+
+ Add multilingual support
+
