@@ -53,16 +53,6 @@ This project demonstrates my ability to build, scale, and maintain production-gr
 
 ---
 
-## 🧱 Architecture Overview
-
-```mermaid
-graph TD
-A[React + TypeScript Frontend] -->|RTK Query API Calls| B[Express Backend]
-B --> C[(MongoDB Database)]
-B --> D[ImageKit CDN]
-B --> E[Authentication + JWT]
-B --> F[Analytics + Ads Integration]
-
 🧠 Key Learnings
 How to architect and maintain a real production system
 
