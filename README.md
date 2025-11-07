@@ -52,6 +52,16 @@ This project demonstrates my ability to build, scale, and maintain production-gr
 - ⚡ Fast load times & SEO-friendly structure  
 
 ---
+📈 Results
+
+🚀 Scaled from 0 → 2,000+ regular users
+
+💵 Achieved consistent revenue via sponsors & Facebook Ads
+
+⚙️ Stable under 8,000+ daily page views
+
+🔄 Continuous iteration and maintenance by me
+
 
 🧠 Key Learnings
 How to architect and maintain a real production system
