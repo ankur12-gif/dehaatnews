@@ -35,7 +35,7 @@ This project demonstrates my ability to build, scale, and maintain production-gr
 - Cloudinary → ImageKit migration for CDN image optimization  
 
 ### Deployment & Analytics
-- Render (frontend + backend hosting)  
+- VPS (frontend + backend hosting)  
 - Cloudflare (DNS, CDN, caching, SSL)  
 - Google Analytics for performance tracking  
 - Facebook Ads + Sponsor integrations  
