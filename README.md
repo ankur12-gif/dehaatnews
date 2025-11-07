@@ -81,3 +81,57 @@ Build a subscription model
 
  Add multilingual support
 
+ Screenshots
+
+
+Home
+
+<img width="1918" height="904" alt="Untitled" src="https://github.com/user-attachments/assets/c359a923-8779-414b-98ee-be5eb62cd342" />
+
+Advertisement
+
+<img width="1909" height="934" alt="Advertisement" src="https://github.com/user-attachments/assets/3708a59b-b605-4193-8e58-7316c5490d7f" />
+
+About us
+
+<img width="1912" height="899" alt="Aboutus" src="https://github.com/user-attachments/assets/f1ab8726-0fb2-48be-a436-8c3c39be268d" />
+
+Admin Login
+
+<img width="1919" height="906" alt="AdminLogin" src="https://github.com/user-attachments/assets/24fe02bf-9e0a-4067-be2e-f3fb69bbad4c" />
+
+Only Admin can access
+
+Articles
+
+<img width="1919" height="906" alt="Posts" src="https://github.com/user-attachments/assets/5152fad7-f0f8-4f99-a7db-f4b5f99b0636" />
+
+Create Articles
+
+<img width="1909" height="911" alt="CreatePost1" src="https://github.com/user-attachments/assets/71e60845-2f89-440d-8cf7-b44b135baed9" />
+<img width="1909" height="658" alt="cr
+
+Edit Articles
+
+<img width="1909" height="906" alt="EditPost" src="https://github.com/user-attachments/assets/eea991e9-7497-4439-9a17-3b1150cbca0d" />
+eatePost2" src="https://github.com/user-attachments/assets/7132cf3b-6ee7-4394-a808-a61ce901d5c1" />
+
+
+Advertisements
+
+<img width="1918" height="898" alt="AllAdvertisersPage" src="https://github.com/user-attachments/assets/e8e4435d-3a59-4887-9934-6f40afb8c4f1" />
+
+Create Advertisements
+
+<img width="1919" height="909" alt="CreateAdvertisersPage" src="https://github.com/user-attachments/assets/fb782d66-3f1d-4261-832e-24bc5fccb3fb" />
+
+PDF download
+<img width="1919" height="811" alt="pdfdownload" src="https://github.com/user-attachments/assets/894decef-fea8-43e5-8d15-624cfcd97b3f" />
+
+
+
+
+
+
+
+
