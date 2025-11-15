@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config(); 
+
 import webpush from "web-push";
 import Subscription from "../models/subscription.js";
 

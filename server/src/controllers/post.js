@@ -29,10 +29,10 @@ const createPost = TryCatch(async (req, res) => {
     const payload = {
     title: post.title,
     image: post.imageUrl || post.photos?.[0]?.url || `${process.env.CLIENT_URL}/dehaatnews.png`,
-    url: `${process.env.CLIENT_URL}/viewfull/${post._id}`,
+    url: `${process.env.SERVER_URL}/viewfull/${post._id}`,
     };
 
-await sendNotification(payload);
+    await sendNotification(payload);
 
     myCache.del("allPosts");
     return res.status(201).json({ success: true, message: "Post created successfully" });
