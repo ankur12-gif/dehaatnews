@@ -37,6 +37,11 @@ const Analytics = () => {
 };
 
 const App = () => {
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js");
+  }
+
   return (
     <Router>
       <Analytics />
