@@ -7,7 +7,7 @@ import { useGetLimitedSponsorsQuery } from "../redux/api/sponsorsApi";
 
 const Sponsers = () => {
     const [page, setPage] = useState(1);
-    const { data } = useGetLimitedSponsorsQuery({ page, limit: 15 });
+    const { data } = useGetLimitedSponsorsQuery({ page, limit: 8 });
     const [slides, setSlides] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
